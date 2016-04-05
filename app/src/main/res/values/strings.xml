@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">STOMAlife. Odkryj stomię</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Questions and Answers-->
+
+    <string name="second_question">W ramach kampanii „STOMAlife. Odkryj stomię” powstały PKS’y, które są:</string>
+    <string name="second_question_answer_a">Miejscami wymiany worków stomijnych</string>
+    <string name="second_question_answer_b">Punktami konsultacyjno – szkoleniowymia</string>
+    <string name="second_question_answer_c">Specjalnymi autobusami dostosowanymi do potrzeb stomików</string>
+
+    <string name="third_question">Czym jest Karta Stomika?</string>
+    <string name="third_question_answer_a">Kartą płatniczą dedykowaną dla stomików</string>
+    <string name="third_question_answer_b">Kartą zawierającą elektroniczną historię choroby stomika</string>
+    <string name="third_question_answer_c">Kartą ułatwiającą stomikom funkcjonowanie w przestrzeni publicznej</string>
+
+</resources>
