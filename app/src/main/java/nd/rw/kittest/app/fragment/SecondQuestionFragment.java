@@ -22,8 +22,7 @@ import nd.rw.kittest.R;
 /**
  * Created by andrew on 25.03.2016.
  */
-public class SecondQuestionFragment extends QuestionFragment
-        implements RadioGroup.OnCheckedChangeListener, MainActivity.StateFragmentNotifier{
+public class SecondQuestionFragment extends QuestionFragment{
 
     public static final String ID = "SecondFragment";
     private static final String TAG = "SecondFragment";
@@ -38,9 +37,6 @@ public class SecondQuestionFragment extends QuestionFragment
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
 
-
-    public boolean isASelected, isBSelected, isCSelected;
-
     private boolean wasNotified;
 
     public static SecondQuestionFragment newInstance() {
@@ -52,33 +48,42 @@ public class SecondQuestionFragment extends QuestionFragment
         return fragment;
     }
 
-    //region RadioGroup.OnCheckedChangeListener
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        Log.d(TAG, "onCheckedChanged: checkedId: " + checkedId);
-        responder.finished(ID, getAnswer(checkedId));
-    }
-
-
-    //endregion RadioGroup.OnCheckedChangeListener
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_second_question, container, false);
         ButterKnife.bind(this, view);
+
+        correctTvAnswer = mUiTvAnswerA;
+
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
 
-//        mUiRbAnswers.setOnCheckedChangeListener(this);
+        if (wasNotified){
+            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
+            transition.startTransition(0);
+            correctTvAnswer.setTextColor(Color.WHITE);
+            mUiTvQuestion.setAlpha(1);
+            mUiTvAnswerA.setAlpha(1);
+            mUiTvAnswerA.setScaleX(1);
+            mUiTvAnswerA.setScaleY(1);
+            mUiTvAnswerB.setAlpha(1);
+            mUiTvAnswerB.setScaleX(1);
+            mUiTvAnswerB.setScaleY(1);
+            mUiTvAnswerC.setAlpha(1);
+            mUiTvAnswerC.setScaleX(1);
+            mUiTvAnswerC.setScaleY(1);
+            previouslySelectedAnwer = correctTvAnswer;
+        }
+
         return view;
     }
 
     private View previouslySelectedAnwer;
 
     private int transitionTime = 500;
+    private TextView correctTvAnswer;
     public View.OnClickListener answerListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -96,12 +101,21 @@ public class SecondQuestionFragment extends QuestionFragment
                 tv.setTextColor(Color.BLACK);
             }
             previouslySelectedAnwer = v;
+
+            if (v == correctTvAnswer){
+                responder.finished(ID, "true");
+            } else {
+                responder.finished(ID, "false");
+            }
+
+            previouslySelectedAnwer = v;
         }
     };
 
 
     @Override
-    public void notifyFragment() {
+    public void notifyAboutEntering() {
+        Log.d(TAG, "notifyAboutEntering: wasNotified?: " + wasNotified);
         if (!wasNotified){
             Log.d(TAG, "notifyFragment: animating");
             mUiTvQuestion.animate()
@@ -135,6 +149,5 @@ public class SecondQuestionFragment extends QuestionFragment
                     .start();
             wasNotified = true;
         }
-
     }
 }

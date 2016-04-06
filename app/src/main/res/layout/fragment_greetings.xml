@@ -1,65 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Powitanie"
-        android:textSize="@dimen/font_huge"
-        android:textColor="@color/primary_text"
-        android:textAlignment="center"
-        />-->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageSwitcher
         android:id="@+id/imageSwitcher1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
-    </ImageSwitcher>
-
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:src="@drawable/gory"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:alpha="1"-->
-        <!--/>-->
+        android:layout_centerVertical="true"></ImageSwitcher>
 
     <TextView
         android:id="@+id/tv_greeting_Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/greeting_textbox"
         android:padding="@dimen/activity_horizontal_margin"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit nibh tortor, egestas convallis elit faucibus rutrum. "
-        android:background="@drawable/greeting_textbox"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/font_huge"
         android:textAlignment="center"
-        />
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/font_huge" />
 
 
     <Button
         android:id="@+id/btn_startQuizz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_greeting_Text"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:text="Rozpocznij quiz"
-        android:padding="30dp"
-        android:textSize="@dimen/font_huge"
-        android:textColor="@color/background"
         android:background="@color/procontentGreen"
-        android:onClick="startQuestClicked"/>
-    
+        android:onClick="startQuestClicked"
+        android:padding="30dp"
+        android:text="Rozpocznij quiz"
+        android:textColor="@color/background"
+        android:textSize="@dimen/font_huge" />
+
 </RelativeLayout>

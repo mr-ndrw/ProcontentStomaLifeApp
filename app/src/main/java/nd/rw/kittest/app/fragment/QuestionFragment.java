@@ -40,4 +40,6 @@ public abstract class QuestionFragment extends Fragment {
         }
     }
 
+    public abstract void notifyAboutEntering();
+
 }

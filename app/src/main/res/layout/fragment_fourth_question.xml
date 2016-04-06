@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Pierwsze pytanie"
-        android:textSize="@dimen/font_huge"
-        android:textColor="@color/primary_text"
-        android:textAlignment="center"
-        />-->
 
     <TextView
         android:id="@+id/tv_question"
@@ -29,18 +20,6 @@
         android:textAlignment="center"
         android:textColor="@color/secondary_text"
         android:textSize="40dp" />
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/second_question_answer_a"-->
-    <!--style="@style/Widget.AppCompat.Button.Colored"-->
-    <!--android:layout_marginTop="@dimen/spacing_huge"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:textSize="32dp"-->
-    <!--android:padding="30dp"-->
-    <!--android:textAllCaps="false"/>-->
 
     <TextView
         android:id="@+id/tv_a"

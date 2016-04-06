@@ -18,15 +18,17 @@
             android:layout_height="100dp"
             android:background="@color/icons"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:id="@+id/iv_stomalife_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/logostomalife_pantone"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/logostomalife_pantone" />
 
             </RelativeLayout>
 
@@ -34,10 +36,10 @@
 
         <ProgressBar
             android:id="@+id/pbQuizz"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_below="@id/iv_stomalife_logo"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:progressDrawable="@drawable/redprogressbar" />
 
     </android.support.design.widget.AppBarLayout>
@@ -46,56 +48,15 @@
         android:id="@+id/rl_mainQuizz"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:background="@color/procontentGreen"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            />
+            android:layout_alignParentTop="true" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:src="@drawable/gory"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:alpha="1"-->
-            <!--/>-->
-
-        <!--
-            Dla pilki centerCrop
-            Dla kobietaRoza centerCrop
-            dla gor tez
-        -->
-
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:src="@drawable/stomasquares2"-->
-            <!--android:alpha="1"-->
-            <!--/>-->
-        <!--
-        android:background="@drawable/white_to_green_gradient_background4"
-        -->
-        <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/roza2"
-            android:alpha="0.5"
-            />-->
-        <!--
-            android:layout_marginLeft="-150dp"
-            android:layout_marginBottom="-100dp"
-        -->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

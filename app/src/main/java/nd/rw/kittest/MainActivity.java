@@ -24,31 +24,11 @@ import nd.rw.kittest.app.fragment.QuestionFragment;
 import nd.rw.kittest.app.fragment.SecondQuestionFragment;
 import nd.rw.kittest.app.fragment.SummingUpFragment;
 import nd.rw.kittest.app.fragment.ThirdQuestionFragment;
-import nd.rw.kittest.app.model.FirstQuestionModel;
 
 public class MainActivity
         extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, QuestionFragment.FragmentQuizFinishedResponder {
 
-    public void startQuestClicked(View view) {
-        mUiViewPager.setCurrentItem(1);
-    }
-
-    public void onFinishQuizClicked(View view) {
-        mUiViewPager.setCurrentItem(6, true);
-    }
-
-    public interface StateFragmentNotifier{
-        void notifyFragment();
-    }
-
-    //region State enum
-
-    private enum State{
-        Greeting, FirstQuestion, SecondQuestion, ThirdQuestion, FourthQuestion, SummingUp
-    }
-
-    //endregion State enum
 
     //region Fields
 
@@ -57,6 +37,7 @@ public class MainActivity
     private static final String TAG = "MainActivity";
     private int currentState = 1;
 
+    private int score;
 
     @Bind(R.id.container)
     public ViewPager mUiViewPager;
@@ -76,8 +57,6 @@ public class MainActivity
     private FourthQuestionFragment fourthQuestionFragment;
     private SummingUpFragment summingUpFragment;
 
-    private FirstQuestionModel firstModel, secondModel, thirdModel, fourthModel;
-
     //endregion Fields
 
     //region AppCompatActivity Methods
@@ -86,21 +65,16 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ButterKnife.bind(this);
 
         pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mUiViewPager.setAdapter(pagerAdapter);
         mUiViewPager.addOnPageChangeListener(this);
-        firstModel = secondModel = thirdModel = fourthModel = new FirstQuestionModel();
-        firstModel.selectedAnswers = 1;
 
         greetingsFragment = GreetingFragment.newInstance();
-        firstQuestionFragment = FirstQuestionFragment.newInstance(firstModel);
-        secondQuestionFragment= SecondQuestionFragment.newInstance();
-        thirdQuestionFragment= ThirdQuestionFragment.newInstance();
+        firstQuestionFragment = FirstQuestionFragment.newInstance();
+        secondQuestionFragment = SecondQuestionFragment.newInstance();
+        thirdQuestionFragment = ThirdQuestionFragment.newInstance();
         fourthQuestionFragment = FourthQuestionFragment.newInstance();
         summingUpFragment = SummingUpFragment.newInstance();
 
@@ -126,118 +100,109 @@ public class MainActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Dispatch onStart() to all fragments.  Ensure any created loaders are
-     * now started.
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        greetingsFragment.notifyFragment();
-    }
-
     //endregion AppCompatActivity Methods
 
-    //region Private Methods
+    //region Events, Listeners
 
-    //endregion Private Methods
+    public void startQuestClicked(View view) {
+        mUiViewPager.setCurrentItem(1);
+    }
+
+    public void onFinishQuizClicked(View view) {
+        mUiViewPager.setCurrentItem(6, true);
+    }
+
+    //endregion Events, Listeners
 
     //region OnPageChangeListener methods
 
-
-    final float[] from = new float[3], to =   new float[3];
-    float[] hsv = new float[3];
-
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
+        //Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
 
-        int progressBarPositon = position * 100 + (int)(positionOffset * 100);
+        int progressBarPositon = position * 100 + (int) (positionOffset * 100);
         mUiProgressBar.setProgress(progressBarPositon);
 
 
-        if(position == 4){
-
-
+        if (position == 4) {
+            //  continuously change the bg color
             relativeLayout.setBackgroundColor(animatedColor.with(positionOffset));
         }
 
-
-//        if (position == currentState){
-//            if (positionOffset > 0.05){
-//                mUiViewPager.setCurrentItem(position, true);
-//            }
-//        }
+        if (position == currentState){
+            if (positionOffset > 0.05){
+                mUiViewPager.setCurrentItem(position, true);
+            }
+        }
     }
 
     @Override
     public void onPageSelected(int position) {
         Log.d(TAG, "onPageSelected() called with: " + "position = [" + position + "]");
-        switch(position){
-            //// TODO: 30.03.2016 shorten this shit, abstract notifyFragment method into QuestionFragment
-            case 1: {
-                ((FirstQuestionFragment)pagerAdapter.getItem(1)).notifyFragment();
-                break;
-            }
-            case 2: {
-                ((SecondQuestionFragment)pagerAdapter.getItem(2)).notifyFragment();
-                break;
-            }
-            case 3: {
-                ((ThirdQuestionFragment)pagerAdapter.getItem(3)).notifyFragment();
-                break;
-            }
-            case 4: {
-                ((FourthQuestionFragment)pagerAdapter.getItem(4)).notifyFragment();
-                break;
-            }
-        }
+        QuestionFragment questionFragment = (QuestionFragment) pagerAdapter.getItem(position);
+        questionFragment.notifyAboutEntering();
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        //  empty by design
     }
-
 
     //endregion OnPageChangeListener methods
 
     //region FragmentQuizFinishedResponder methods
 
+    boolean wasFirstCorrect, wasSecondCorrect, wasThirdCorrect, wasFourthCorrect;
+
     @Override
     public void finished(String fragmentId, String answer) {
         Log.d(TAG, "finished: fragmentId: " + fragmentId);
         Log.d(TAG, "finished: answer: " + answer);
-        switch(fragmentId){
-            case FirstQuestionFragment.ID:{
-                firstQuestionFragment.notifyFragment();
+
+        boolean booleanAnswer = Boolean.parseBoolean(answer);
+
+        switch (fragmentId) {
+            case FirstQuestionFragment.ID: {
+                wasFirstCorrect = booleanAnswer;
+                if (currentState >= 2)
+                    return;
                 currentState = 2;
                 break;
             }
-            case SecondQuestionFragment.ID:{
-                secondQuestionFragment.notifyFragment();
+            case SecondQuestionFragment.ID: {
+                wasSecondCorrect = booleanAnswer;
+                if (currentState >= 3)
+                    return;
                 currentState = 3;
                 break;
             }
-            case ThirdQuestionFragment.ID:{
-                thirdQuestionFragment.notifyFragment();
+            case ThirdQuestionFragment.ID: {
+                wasThirdCorrect = booleanAnswer;
+                if (currentState >= 4)
+                    return;
                 currentState = 4;
                 break;
             }
-            case FourthQuestionFragment.ID:{
-                fourthQuestionFragment.notifyFragment();
+            case FourthQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 5)
+                    return;
                 currentState = 5;
                 break;
             }
-            default:{
+            default: {
                 Log.d(TAG, "finished: defaulted. Should not. What the hell.");
             }
         }
     }
 
+    public interface StateFragmentNotifier {
+        void notifyFragment();
+    }
 
     //endregion FragmentQuizFinishedResponder methods
+
+    //region SectionsPagerAdapter class
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -247,7 +212,7 @@ public class MainActivity
 
         @Override
         public Fragment getItem(int position) {
-            switch(position){
+            switch (position) {
                 case 0:
                     return GreetingFragment.newInstance();
                 case 1:
@@ -282,5 +247,7 @@ public class MainActivity
             return null;
         }
     }
+
+    //endregion SectionsPagerAdapter class
 
 }

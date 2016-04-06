@@ -1,6 +1,7 @@
 package nd.rw.kittest.app.fragment;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -21,20 +22,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.MainActivity;
 import nd.rw.kittest.R;
-import nd.rw.kittest.app.model.FirstQuestionModel;
 
 /**
  * Created by andrew on 25.03.2016.
  */
 public class FirstQuestionFragment
-        extends QuestionFragment
-        implements RadioGroup.OnCheckedChangeListener, MainActivity.StateFragmentNotifier {
+        extends QuestionFragment {
 
     public static final String ID = "FirstFragment";
     private static final String TAG = "FirstFragment";
-    private FirstQuestionModel model;
-    private Button mUiBackButton, mUiNextButton;
-
 
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
@@ -46,21 +42,16 @@ public class FirstQuestionFragment
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
 
-
-    public boolean isASelected, isBSelected, isCSelected;
+    private TextView correctTvAnswer;
 
     public boolean wasNotified = false;
 
     //region Methods
 
-    public static FirstQuestionFragment newInstance(FirstQuestionModel model) {
-
+    public static FirstQuestionFragment newInstance() {
         Bundle args = new Bundle();
 
         FirstQuestionFragment fragment = new FirstQuestionFragment();
-        if (model != null) {
-            args.putInt("selectedAnswer", model.selectedAnswers);
-        }
 
         fragment.setArguments(args);
         return fragment;
@@ -68,38 +59,49 @@ public class FirstQuestionFragment
 
     //endregion Methods
 
-    //region RadioGroup.OnCheckedChangeListener
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        Log.d(TAG, "onCheckedChanged: checkedId: " + checkedId);
-        responder.finished(ID, getAnswer(checkedId));
-    }
-
-    //endregion RadioGroup.OnCheckedChangeListener
-
     //region Fragment methods
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        Log.d(TAG, "onCreateView: ");
+        Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
+        Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
+        Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
         final View view = inflater.inflate(R.layout.fragment_first_question, container, false);
         ButterKnife.bind(this, view);
+
+        correctTvAnswer = mUiTvAnswerA;
 
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
 
-        //mUiRbAnswers.setOnCheckedChangeListener(this);
+        if (wasNotified){
+            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
+            transition.startTransition(0);
+            correctTvAnswer.setTextColor(Color.WHITE);
+            mUiTvQuestion.setAlpha(1);
+            mUiTvAnswerA.setAlpha(1);
+            mUiTvAnswerA.setScaleX(1);
+            mUiTvAnswerA.setScaleY(1);
+            mUiTvAnswerB.setAlpha(1);
+            mUiTvAnswerB.setScaleX(1);
+            mUiTvAnswerB.setScaleY(1);
+            mUiTvAnswerC.setAlpha(1);
+            mUiTvAnswerC.setScaleX(1);
+            mUiTvAnswerC.setScaleY(1);
+            previouslySelectedAnwer = correctTvAnswer;
+        }
+
+
         return view;
     }
 
     private View previouslySelectedAnwer;
 
-    private int correctAnswer = 1;
-
     private int transitionTime = 500;
+
     public View.OnClickListener answerListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -116,14 +118,22 @@ public class FirstQuestionFragment
                 tv = (TextView) previouslySelectedAnwer;
                 tv.setTextColor(Color.BLACK);
             }
+
+            if (v == correctTvAnswer){
+                responder.finished(ID, "true");
+            } else {
+                responder.finished(ID, "false");
+            }
+
             previouslySelectedAnwer = v;
         }
     };
 
+    //endregion Fragment methods
+
     @Override
-    public void notifyFragment() {
+    public void notifyAboutEntering() {
         if (!wasNotified){
-            Log.d(TAG, "notifyFragment: animating");
             mUiTvQuestion.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
@@ -144,7 +154,7 @@ public class FirstQuestionFragment
                     .setStartDelay(900)
                     .setDuration(500)
                     .setInterpolator(new FastOutSlowInInterpolator())
-                            .start();
+                    .start();
             mUiTvAnswerC.animate()
                     .alpha(1f)
                     .scaleX(1f)
@@ -155,9 +165,6 @@ public class FirstQuestionFragment
                     .start();
             wasNotified = true;
         }
-
     }
-
-    //endregion Fragment methods
 
 }

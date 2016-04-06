@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        android:text="Pierwsze pytanie"
-        android:textSize="@dimen/font_huge"
-        android:textColor="@color/primary_text"
-        android:textAlignment="center"
-        />-->
-
     <TextView
         android:id="@+id/tv_question"
         android:layout_width="match_parent"
@@ -30,18 +20,6 @@
         android:textColor="@color/secondary_text"
         android:textSize="40dp" />
 
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/second_question_answer_a"-->
-    <!--style="@style/Widget.AppCompat.Button.Colored"-->
-    <!--android:layout_marginTop="@dimen/spacing_huge"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:textSize="32dp"-->
-    <!--android:padding="30dp"-->
-    <!--android:textAllCaps="false"/>-->
-
     <TextView
         android:id="@+id/tv_a"
         android:layout_width="match_parent"
@@ -51,7 +29,9 @@
         android:layout_marginTop="@dimen/spacing_huge"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="0"
+        android:alpha="1"
+        android:scaleX="0"
+        android:scaleY="0"
         android:text="@string/second_question_answer_a"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
@@ -66,7 +46,9 @@
         android:layout_marginTop="@dimen/spacing_huge"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="0"
+        android:alpha="1"
+        android:scaleX="0"
+        android:scaleY="0"
         android:text="@string/second_question_answer_b"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
@@ -82,48 +64,12 @@
         android:layout_marginTop="@dimen/spacing_huge"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="0"
+        android:alpha="1"
+        android:scaleX="0"
+        android:scaleY="0"
         android:text="@string/second_question_answer_c"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
         android:textSize="32dp" />
-
-    <!--<RadioGroup-->
-    <!--android:id="@+id/rg_answers"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="40dp"-->
-    <!-->-->
-    <!--<RadioButton-->
-    <!--android:id="@+id/rb_a"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="@dimen/spacing_huge"-->
-    <!--android:text="@string/second_question_answer_a"-->
-    <!--android:textSize="32dp"-->
-    <!--android:alpha="1"-->
-    <!--android:scaleX="0"-->
-    <!--android:scaleY="0"/>-->
-    <!--<RadioButton-->
-    <!--android:id="@+id/rb_b"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="@dimen/spacing_huge"-->
-    <!--android:text="@string/second_question_answer_b"-->
-    <!--android:textSize="32dp"-->
-    <!--android:alpha="1"-->
-    <!--android:scaleX="0"-->
-    <!--android:scaleY="0"/>-->
-    <!--<RadioButton-->
-    <!--android:id="@+id/rb_c"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="@dimen/spacing_huge"-->
-    <!--android:text="@string/second_question_answer_c"-->
-    <!--android:textSize="32dp"-->
-    <!--android:alpha="1"-->
-    <!--android:scaleX="0"-->
-    <!--android:scaleY="0"/>-->
-    <!--</RadioGroup>-->
 
 </LinearLayout>

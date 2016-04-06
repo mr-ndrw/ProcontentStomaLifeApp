@@ -5,6 +5,11 @@
 
     <!-- Questions and Answers-->
 
+    <string name="first_question">Połącz nazwę worka z rodzajem stomii, do której jest on przeznaczony.</string>
+    <string name="first_question_answer_a">Ileostomia</string>
+    <string name="first_question_answer_b">Kolostomia</string>
+    <string name="first_question_answer_c">Urostomia</string>
+    
     <string name="second_question">W ramach kampanii „STOMAlife. Odkryj stomię” powstały PKS’y, które są:</string>
     <string name="second_question_answer_a">Miejscami wymiany worków stomijnych</string>
     <string name="second_question_answer_b">Punktami konsultacyjno – szkoleniowymia</string>
@@ -14,5 +19,38 @@
     <string name="third_question_answer_a">Kartą płatniczą dedykowaną dla stomików</string>
     <string name="third_question_answer_b">Kartą zawierającą elektroniczną historię choroby stomika</string>
     <string name="third_question_answer_c">Kartą ułatwiającą stomikom funkcjonowanie w przestrzeni publicznej</string>
+
+    <string name="fourth_question">Jakie uczucia najczęściej towarzyszą pacjentom w momencie, kiedy dowiadują się o konieczności wyłonienia stomii:</string>
+    <string name="fourth_question_answer_a">Ulga</string>
+    <string name="fourth_question_answer_b">Strach</string>
+    <string name="fourth_question_answer_c">Radość</string>
+    <string name="fourth_question_answer_d">Panika</string>
+
+    <string name="fifth_question">Z jakimi obawami pacjentów spotyka się Pani/Pan  najczęściej przed operacją wyłonienia stomii:</string>
+    <string name="fifth_question_answer_a">Obawa przed poinformowaniem otoczenia</string>
+    <string name="fifth_question_answer_b">Obawa przed komplikacjami pooperacyjnymi</string>
+    <string name="fifth_question_answer_c">Obawa związana z finansowaniem sprzętu stomijnego</string>
+    <string name="fifth_question_answer_d">Obawa przed radykalną zmianą sposobu życia</string>
+
+    <string name="sixth_question">Czy wyznacza Pani/Pan  miejsce wyłonienia stomii przed  planową operacją:</string>
+    <string name="sixth_question_answer_a">Zawsze</string>
+    <string name="sixth_question_answer_b">Czasami</string>
+    <string name="sixth_question_answer_c">Wyznaczam miejsce wyłonienia stomii na stole operacyjnym</string>
+
+    <string name="seventh_question">Jakiej pomocy Pani/Pan udziela swoim pacjentom po operacji  wyłonienia stomii:</string>
+    <string name="seventh_question_answer_a">Udzielam informacji medycznych</string>
+    <string name="seventh_question_answer_b">Kieruję pod opiekę pielęgniarki stomijnej</string>
+    <string name="seventh_question_answer_c">Odsyłam do organizacji stomijnych</string>
+    <string name="seventh_question_answer_d">Kieruję pod opiekę psychologa</string>
+    <string name="seventh_question_answer_e">Po operacji moja rola się kończy</string>
+
+    <string name="eigth_question">Czy w Pani/Pana placówce działa poradnia stomijna?</string>
+    <string name="eigth_question_answer_a">Tak</string>
+    <string name="eigth_question_answer_b">Nie</string>
+
+    <string name="ninth_question">Czy Pani/Pana zdaniem działalność kampanii na rzecz propagowania wiedzy o stomii ma realny wpływ na jakość życia stomików:</string>
+    <string name="ninth_question_answer_a">Tak</string>
+    <string name="ninth_question_answer_b">Nie</string>
+    <string name="ninth_question_answer_c">Nie mam zdania</string>
 
 </resources>

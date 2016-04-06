@@ -24,8 +24,7 @@ import nd.rw.kittest.R;
 /**
  * Created by andrew on 25.03.2016.
  */
-public class FourthQuestionFragment extends QuestionFragment
-        implements RadioGroup.OnCheckedChangeListener, MainActivity.StateFragmentNotifier{
+public class FourthQuestionFragment extends QuestionFragment{
 
     public static final String ID = "FourthFragment";
     public static final String TAG = "FourthFragment";
@@ -41,11 +40,9 @@ public class FourthQuestionFragment extends QuestionFragment
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
 
-
-    public boolean isASelected, isBSelected, isCSelected;
-
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
+
     private boolean wasNotified = false;
 
     public static FourthQuestionFragment newInstance() {
@@ -55,13 +52,6 @@ public class FourthQuestionFragment extends QuestionFragment
         FourthQuestionFragment fragment = new FourthQuestionFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        Log.d(TAG, "onCheckedChanged: checkedId: " + checkedId);
-        responder.finished(ID, getAnswer(checkedId));
-        this.animateFinishButton();
     }
 
     boolean wasFinishAnimated = false;
@@ -98,17 +88,37 @@ public class FourthQuestionFragment extends QuestionFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_fourth_question, container, false);
         ButterKnife.bind(this, view);
+
+        correctTvAnswer = mUiTvAnswerA;
+
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
 
-        //mUiRbAnswers.setOnCheckedChangeListener(this);
+        if (wasNotified){
+            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
+            transition.startTransition(0);
+            correctTvAnswer.setTextColor(Color.WHITE);
+            mUiTvQuestion.setAlpha(1);
+            mUiTvAnswerA.setAlpha(1);
+            mUiTvAnswerA.setScaleX(1);
+            mUiTvAnswerA.setScaleY(1);
+            mUiTvAnswerB.setAlpha(1);
+            mUiTvAnswerB.setScaleX(1);
+            mUiTvAnswerB.setScaleY(1);
+            mUiTvAnswerC.setAlpha(1);
+            mUiTvAnswerC.setScaleX(1);
+            mUiTvAnswerC.setScaleY(1);
+            previouslySelectedAnwer = correctTvAnswer;
+        }
+
         return view;
     }
 
     private View previouslySelectedAnwer;
 
     private int transitionTime = 500;
+    private TextView correctTvAnswer;
     public View.OnClickListener answerListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -125,6 +135,15 @@ public class FourthQuestionFragment extends QuestionFragment
                 tv = (TextView) previouslySelectedAnwer;
                 tv.setTextColor(Color.BLACK);
             }
+
+            if (v == correctTvAnswer){
+                responder.finished(ID, "true");
+            } else {
+                responder.finished(ID, "false");
+            }
+
+            previouslySelectedAnwer = v;
+
             previouslySelectedAnwer = v;
             animateFinishButton();
         }
@@ -132,7 +151,7 @@ public class FourthQuestionFragment extends QuestionFragment
 
 
     @Override
-    public void notifyFragment() {
+    public void notifyAboutEntering() {
         if (!wasNotified){
             Log.d(TAG, "notifyFragment: animating");
             mUiTvQuestion.animate()
@@ -164,13 +183,8 @@ public class FourthQuestionFragment extends QuestionFragment
                     .setDuration(500)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
-            mUiTvQuestion.setAlpha(1);
-            mUiTvAnswerA.setAlpha(1);
-            mUiTvAnswerB.setAlpha(1);
-            mUiTvAnswerC.setAlpha(1);
-            mUiTvQuestion.setScaleX(1);
             wasNotified = true;
         }
-
     }
+
 }
