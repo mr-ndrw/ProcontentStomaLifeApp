@@ -17,11 +17,16 @@ import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.app.AnimatedColor;
+import nd.rw.kittest.app.fragment.EighthQuestionFragment;
+import nd.rw.kittest.app.fragment.FifthQuestionFragment;
 import nd.rw.kittest.app.fragment.FirstQuestionFragment;
 import nd.rw.kittest.app.fragment.FourthQuestionFragment;
 import nd.rw.kittest.app.fragment.GreetingFragment;
+import nd.rw.kittest.app.fragment.NinthQuestionFragment;
 import nd.rw.kittest.app.fragment.QuestionFragment;
 import nd.rw.kittest.app.fragment.SecondQuestionFragment;
+import nd.rw.kittest.app.fragment.SeventhQuestionFragment;
+import nd.rw.kittest.app.fragment.SixthQuestionFragment;
 import nd.rw.kittest.app.fragment.SummingUpFragment;
 import nd.rw.kittest.app.fragment.ThirdQuestionFragment;
 
@@ -29,15 +34,11 @@ public class MainActivity
         extends AppCompatActivity
         implements ViewPager.OnPageChangeListener, QuestionFragment.FragmentQuizFinishedResponder {
 
-
     //region Fields
 
-    private static final int MIN_STATE = 0;
-    public static final int MAX_STATE = 5;
     private static final String TAG = "MainActivity";
     private int currentState = 1;
-
-    private int score;
+    AnimatedColor animatedColor;
 
     @Bind(R.id.container)
     public ViewPager mUiViewPager;
@@ -50,11 +51,16 @@ public class MainActivity
 
     public SectionsPagerAdapter pagerAdapter;
 
-    private GreetingFragment greetingsFragment;
+    private GreetingFragment greetingFragment;
     private FirstQuestionFragment firstQuestionFragment;
     private SecondQuestionFragment secondQuestionFragment;
     private ThirdQuestionFragment thirdQuestionFragment;
     private FourthQuestionFragment fourthQuestionFragment;
+    private FifthQuestionFragment fifthQuestionFragment;
+    private SixthQuestionFragment sixthQuestionFragment;
+    private SeventhQuestionFragment seventhQuestionFragment;
+    private EighthQuestionFragment eighthQuestionFragment;
+    private NinthQuestionFragment ninthQuestionFragment;
     private SummingUpFragment summingUpFragment;
 
     //endregion Fields
@@ -71,19 +77,22 @@ public class MainActivity
         mUiViewPager.setAdapter(pagerAdapter);
         mUiViewPager.addOnPageChangeListener(this);
 
-        greetingsFragment = GreetingFragment.newInstance();
+        mUiProgressBar.setMax((pagerAdapter.getCount()-1) * 100);
+
+        greetingFragment = GreetingFragment.newInstance();
         firstQuestionFragment = FirstQuestionFragment.newInstance();
         secondQuestionFragment = SecondQuestionFragment.newInstance();
         thirdQuestionFragment = ThirdQuestionFragment.newInstance();
         fourthQuestionFragment = FourthQuestionFragment.newInstance();
+        fifthQuestionFragment = FifthQuestionFragment.newInstance();
+        sixthQuestionFragment = SixthQuestionFragment.newInstance();
+        seventhQuestionFragment = SeventhQuestionFragment.newInstance();
+        eighthQuestionFragment = EighthQuestionFragment.newInstance();
+        ninthQuestionFragment = NinthQuestionFragment.newInstance();
         summingUpFragment = SummingUpFragment.newInstance();
-
-        mUiProgressBar.setMax(500);
 
         animatedColor = new AnimatedColor(Color.parseColor("#84BD00"), Color.WHITE);
     }
-
-    AnimatedColor animatedColor;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,7 +118,7 @@ public class MainActivity
     }
 
     public void onFinishQuizClicked(View view) {
-        mUiViewPager.setCurrentItem(6, true);
+        mUiViewPager.setCurrentItem(10, true);
     }
 
     //endregion Events, Listeners
@@ -120,11 +129,12 @@ public class MainActivity
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         //Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
 
-        int progressBarPositon = position * 100 + (int) (positionOffset * 100);
-        mUiProgressBar.setProgress(progressBarPositon);
+        if (position > 0){
+            int progressBarPosition = (position + 1) * 100 + (int) (positionOffset * 100);
+            mUiProgressBar.setProgress(progressBarPosition);
+        }
 
-
-        if (position == 4) {
+        if (position == 9) {
             //  continuously change the bg color
             relativeLayout.setBackgroundColor(animatedColor.with(positionOffset));
         }
@@ -184,12 +194,48 @@ public class MainActivity
                 break;
             }
             case FourthQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
+                wasThirdCorrect = booleanAnswer;
                 if (currentState >= 5)
                     return;
                 currentState = 5;
                 break;
             }
+            case FifthQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 6)
+                    return;
+                currentState = 6;
+                break;
+            }
+            case SixthQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 7)
+                    return;
+                currentState = 7;
+                break;
+            }
+            case SeventhQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 8)
+                    return;
+                currentState = 8;
+                break;
+            }
+            case EighthQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 9)
+                    return;
+                currentState = 9;
+                break;
+            }
+            case NinthQuestionFragment.ID: {
+                wasFourthCorrect = booleanAnswer;
+                if (currentState >= 10)
+                    return;
+                currentState = 10;
+                break;
+            }
+
             default: {
                 Log.d(TAG, "finished: defaulted. Should not. What the hell.");
             }
@@ -214,37 +260,39 @@ public class MainActivity
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return GreetingFragment.newInstance();
+                    return greetingFragment;
                 case 1:
-                    return MainActivity.this.firstQuestionFragment;
+                    return firstQuestionFragment;
                 case 2:
-                    return MainActivity.this.secondQuestionFragment;
+                    return secondQuestionFragment;
                 case 3:
-                    return MainActivity.this.thirdQuestionFragment;
+                    return thirdQuestionFragment;
                 case 4:
-                    return MainActivity.this.fourthQuestionFragment;
+                    return fourthQuestionFragment;
                 case 5:
-                    return SummingUpFragment.newInstance();
+                    return fifthQuestionFragment;
+                case 6:
+                    return sixthQuestionFragment;
+                case 7:
+                    return seventhQuestionFragment;
+                case 8:
+                    return eighthQuestionFragment;
+                case 9:
+                    return ninthQuestionFragment;
+                case 10:
+                    return summingUpFragment;
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 6;
+            return 11;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            return "";
         }
     }
 

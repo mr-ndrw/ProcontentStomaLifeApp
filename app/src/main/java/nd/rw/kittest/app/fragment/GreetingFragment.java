@@ -32,7 +32,7 @@ public class GreetingFragment extends QuestionFragment{
     @Bind(R.id.btn_startQuizz)
     public Button mUiBtnStartQuiz;
 
-    @Bind(R.id.imageSwitcher1)
+//    @Bind(R.id.imageSwitcher1)
     public ImageSwitcher imageSwitcher;
 
     private int imgSwitcherResources[] = {R.drawable.gory, R.drawable.kobieta_roza, R.drawable.rsz_stoma_pilka};
@@ -56,7 +56,7 @@ public class GreetingFragment extends QuestionFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_greetings, container, false);
         ButterKnife.bind(this, view);
-        initializeImageSwitcher();
+        //initializeImageSwitcher();
         return view;
     }
 

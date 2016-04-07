@@ -21,8 +21,8 @@ import nd.rw.kittest.R;
 public class EighthQuestionFragment
         extends QuestionFragment {
 
-    public static final String ID = "FirstFragment";
-    private static final String TAG = "FirstFragment";
+    public static final String ID = "EighthQuestionFragment";
+    private static final String TAG = "EighthQuestionFragment";
 
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
@@ -31,8 +31,6 @@ public class EighthQuestionFragment
     public TextView mUiTvAnswerA;
     @Bind(R.id.tv_b)
     public TextView mUiTvAnswerB;
-    @Bind(R.id.tv_c)
-    public TextView mUiTvAnswerC;
 
     private TextView correctTvAnswer;
 
@@ -56,18 +54,13 @@ public class EighthQuestionFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
-        Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
-        Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
-        final View view = inflater.inflate(R.layout.fragment_first_question, container, false);
+        final View view = inflater.inflate(R.layout.fragment_8_question, container, false);
         ButterKnife.bind(this, view);
 
         correctTvAnswer = mUiTvAnswerA;
 
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
-        mUiTvAnswerC.setOnClickListener(answerListener);
 
         if (wasNotified){
             TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
@@ -80,9 +73,6 @@ public class EighthQuestionFragment
             mUiTvAnswerB.setAlpha(1);
             mUiTvAnswerB.setScaleX(1);
             mUiTvAnswerB.setScaleY(1);
-            mUiTvAnswerC.setAlpha(1);
-            mUiTvAnswerC.setScaleX(1);
-            mUiTvAnswerC.setScaleY(1);
             previouslySelectedAnwer = correctTvAnswer;
         }
 
@@ -126,6 +116,9 @@ public class EighthQuestionFragment
     @Override
     public void notifyAboutEntering() {
         if (!wasNotified){
+            int delay = 600;
+            int delayValue = 300;
+            int answerAnimationDuration = 500;
             mUiTvQuestion.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
@@ -135,24 +128,17 @@ public class EighthQuestionFragment
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(600)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
+            delay += delayValue;
             mUiTvAnswerB.animate()
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(900)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            mUiTvAnswerC.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(1200)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
             wasNotified = true;

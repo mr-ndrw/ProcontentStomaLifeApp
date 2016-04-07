@@ -21,8 +21,8 @@ import nd.rw.kittest.R;
 public class FifthQuestionFragment
         extends QuestionFragment {
 
-    public static final String ID = "FirstFragment";
-    private static final String TAG = "FirstFragment";
+    public static final String ID = "FifthQuestionFragment";
+    private static final String TAG = "FifthQuestionFragment";
 
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
@@ -33,6 +33,8 @@ public class FifthQuestionFragment
     public TextView mUiTvAnswerB;
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
+    @Bind(R.id.tv_d)
+    public TextView mUiTvAnswerD;
 
     private TextView correctTvAnswer;
 
@@ -56,11 +58,7 @@ public class FifthQuestionFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
-        Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
-        Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
-        final View view = inflater.inflate(R.layout.fragment_first_question, container, false);
+        final View view = inflater.inflate(R.layout.fragment_5_question, container, false);
         ButterKnife.bind(this, view);
 
         correctTvAnswer = mUiTvAnswerA;
@@ -83,6 +81,9 @@ public class FifthQuestionFragment
             mUiTvAnswerC.setAlpha(1);
             mUiTvAnswerC.setScaleX(1);
             mUiTvAnswerC.setScaleY(1);
+            mUiTvAnswerD.setAlpha(1);
+            mUiTvAnswerD.setScaleX(1);
+            mUiTvAnswerD.setScaleY(1);
             previouslySelectedAnwer = correctTvAnswer;
         }
 
@@ -126,6 +127,9 @@ public class FifthQuestionFragment
     @Override
     public void notifyAboutEntering() {
         if (!wasNotified){
+            int delay = 600;
+            int delayValue = 200;
+            int answerAnimationDuration = 500;
             mUiTvQuestion.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
@@ -135,24 +139,35 @@ public class FifthQuestionFragment
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(600)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
+            delay += delayValue;
             mUiTvAnswerB.animate()
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(900)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
+            delay += delayValue;
             mUiTvAnswerC.animate()
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(1200)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
+                    .setInterpolator(new FastOutSlowInInterpolator())
+                    .start();
+            delay += delayValue;
+            mUiTvAnswerD.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
             wasNotified = true;

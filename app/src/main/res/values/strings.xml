@@ -3,6 +3,9 @@
     <string name="action_settings">Settings</string>
 
 
+    <string name="greeting">Kampania &quot;STOMAlife. Odkryj stomię&quot; zaprasza do rozwiązania krótkiej ankiety dotyczącej stomii.</string>
+    <string name="summing_up">Dziękujemy za poświęcony nam czas.</string>
+
     <!-- Questions and Answers-->
 
     <string name="first_question">Połącz nazwę worka z rodzajem stomii, do której jest on przeznaczony.</string>
@@ -12,7 +15,7 @@
     
     <string name="second_question">W ramach kampanii „STOMAlife. Odkryj stomię” powstały PKS’y, które są:</string>
     <string name="second_question_answer_a">Miejscami wymiany worków stomijnych</string>
-    <string name="second_question_answer_b">Punktami konsultacyjno – szkoleniowymia</string>
+    <string name="second_question_answer_b">Punktami konsultacyjno – szkoleniowymi</string>
     <string name="second_question_answer_c">Specjalnymi autobusami dostosowanymi do potrzeb stomików</string>
 
     <string name="third_question">Czym jest Karta Stomika?</string>
@@ -44,9 +47,9 @@
     <string name="seventh_question_answer_d">Kieruję pod opiekę psychologa</string>
     <string name="seventh_question_answer_e">Po operacji moja rola się kończy</string>
 
-    <string name="eigth_question">Czy w Pani/Pana placówce działa poradnia stomijna?</string>
-    <string name="eigth_question_answer_a">Tak</string>
-    <string name="eigth_question_answer_b">Nie</string>
+    <string name="eighth_question">Czy w Pani/Pana placówce działa poradnia stomijna?</string>
+    <string name="eighth_question_answer_a">Tak</string>
+    <string name="eighth_question_answer_b">Nie</string>
 
     <string name="ninth_question">Czy Pani/Pana zdaniem działalność kampanii na rzecz propagowania wiedzy o stomii ma realny wpływ na jakość życia stomików:</string>
     <string name="ninth_question_answer_a">Tak</string>

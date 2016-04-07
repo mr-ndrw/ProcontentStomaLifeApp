@@ -4,41 +4,47 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageSwitcher
-        android:id="@+id/imageSwitcher1"
+    <!--<ImageSwitcher-->
+    <!--android:id="@+id/imageSwitcher1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"></ImageSwitcher>-->
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"></ImageSwitcher>
-
-    <TextView
-        android:id="@+id/tv_greeting_Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/greeting_textbox"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit nibh tortor, egestas convallis elit faucibus rutrum. "
-        android:textAlignment="center"
-        android:textColor="@color/primary_text"
-        android:textSize="@dimen/font_huge" />
-
+        android:scaleType="centerCrop"
+        android:src="@drawable/american_beauty_bez_znaku" />
 
     <Button
         android:id="@+id/btn_startQuizz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_greeting_Text"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginBottom="250dp"
         android:background="@color/procontentGreen"
         android:onClick="startQuestClicked"
         android:padding="30dp"
         android:text="Rozpocznij quiz"
         android:textColor="@color/background"
         android:textSize="@dimen/font_huge" />
+
+    <TextView
+        android:id="@+id/tv_greeting_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/greeting_textbox"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="@string/greeting"
+        android:textAlignment="center"
+        android:textColor="@color/icons"
+        android:textSize="@dimen/font_huge" />
+
 
 </RelativeLayout>

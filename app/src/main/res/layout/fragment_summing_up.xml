@@ -1,42 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_your_Score"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_alignParentTop="true"
-        android:text="Twój wynik"
-        android:textSize="75sp"
-        android:textAlignment="center"
-        />
-
-        <TextView
-            android:id="@+id/tv_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/tv_your_Score"
-            android:layout_marginTop="150dp"
-            android:text="3/4"
-            android:textSize="150sp"
-            android:textColor="@color/procontentRed" />
+        android:layout_height="match_parent"
+        android:src="@drawable/paulina"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tv_summing_up_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_below="@id/tv_score"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrerit nibh tortor, egestas convallis elit faucibus rutrum. "
-        android:textColor="@color/proContentDarkGree"
-        android:textSize="@dimen/font_huge"
-        android:textAlignment="center" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/summing_up"
+        android:textColor="@color/icons"
+        android:textSize="45sp"
+        android:textAlignment="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/summing_up_textbox"/>
 
 
 

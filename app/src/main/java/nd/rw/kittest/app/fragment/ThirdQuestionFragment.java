@@ -4,19 +4,15 @@ import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import nd.rw.kittest.MainActivity;
 import nd.rw.kittest.R;
 
 /**
@@ -51,7 +47,7 @@ public class ThirdQuestionFragment extends QuestionFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_third_question, container, false);
+        final View view = inflater.inflate(R.layout.fragment_3_question, container, false);
         ButterKnife.bind(this, view);
 
         correctTvAnswer = mUiTvAnswerA;
@@ -106,8 +102,6 @@ public class ThirdQuestionFragment extends QuestionFragment{
             } else {
                 responder.finished(ID, "false");
             }
-
-            previouslySelectedAnwer = v;
 
             previouslySelectedAnwer = v;
         }

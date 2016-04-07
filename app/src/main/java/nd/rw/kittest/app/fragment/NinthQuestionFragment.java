@@ -1,5 +1,6 @@
 package nd.rw.kittest.app.fragment;
 
+import android.animation.Animator;
 import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -21,8 +23,8 @@ import nd.rw.kittest.R;
 public class NinthQuestionFragment
         extends QuestionFragment {
 
-    public static final String ID = "FirstFragment";
-    private static final String TAG = "FirstFragment";
+    public static final String ID = "NinthFragment";
+    private static final String TAG = "NinthFragment";
 
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
@@ -33,6 +35,9 @@ public class NinthQuestionFragment
     public TextView mUiTvAnswerB;
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
+
+    @Bind(R.id.btn_finishQuiz)
+    public Button mUiBtnFinish;
 
     private TextView correctTvAnswer;
 
@@ -49,6 +54,35 @@ public class NinthQuestionFragment
         return fragment;
     }
 
+    boolean wasFinishAnimated = false;
+
+    private void animateFinishButton(){
+        if (!wasFinishAnimated){
+            mUiBtnFinish.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setInterpolator(new FastOutSlowInInterpolator())
+                    .setStartDelay(200)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) { }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) { }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) { }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) { }
+                    })
+                    .start();
+            wasFinishAnimated = true;
+        }
+
+    }
+
     //endregion Methods
 
     //region Fragment methods
@@ -56,11 +90,7 @@ public class NinthQuestionFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
-        Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
-        Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
-        final View view = inflater.inflate(R.layout.fragment_first_question, container, false);
+        final View view = inflater.inflate(R.layout.fragment_9_question, container, false);
         ButterKnife.bind(this, view);
 
         correctTvAnswer = mUiTvAnswerA;
@@ -116,7 +146,7 @@ public class NinthQuestionFragment
             } else {
                 responder.finished(ID, "false");
             }
-
+            animateFinishButton();
             previouslySelectedAnwer = v;
         }
     };
@@ -126,6 +156,9 @@ public class NinthQuestionFragment
     @Override
     public void notifyAboutEntering() {
         if (!wasNotified){
+            int delay = 600;
+            int delayValue = 300;
+            int answerAnimationDuration = 500;
             mUiTvQuestion.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
@@ -135,24 +168,26 @@ public class NinthQuestionFragment
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(600)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
+            delay += delayValue;
             mUiTvAnswerB.animate()
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(900)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
+            delay += delayValue;
             mUiTvAnswerC.animate()
                     .alpha(1f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setStartDelay(1200)
-                    .setDuration(500)
+                    .setStartDelay(delay)
+                    .setDuration(answerAnimationDuration)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .start();
             wasNotified = true;

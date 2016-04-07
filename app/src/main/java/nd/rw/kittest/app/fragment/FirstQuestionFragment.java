@@ -1,26 +1,19 @@
 package nd.rw.kittest.app.fragment;
 
-import android.animation.Animator;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import nd.rw.kittest.MainActivity;
 import nd.rw.kittest.R;
 
 /**
@@ -41,6 +34,9 @@ public class FirstQuestionFragment
     public TextView mUiTvAnswerB;
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
+
+    @Bind(R.id.rl_question)
+    public RelativeLayout rl_question;
 
     private TextView correctTvAnswer;
 
@@ -68,7 +64,7 @@ public class FirstQuestionFragment
         Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
         Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
         Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
-        final View view = inflater.inflate(R.layout.fragment_first_question, container, false);
+        final View view = inflater.inflate(R.layout.fragment_1_question, container, false);
         ButterKnife.bind(this, view);
 
         correctTvAnswer = mUiTvAnswerA;
@@ -133,8 +129,12 @@ public class FirstQuestionFragment
 
     @Override
     public void notifyAboutEntering() {
+        Log.d(TAG, "notifyAboutEntering: mUiTvQuestioN == null?: " + (mUiTvQuestion == null));
+        Log.d(TAG, "notifyAboutEntering: mUiTvA == null?: " + (mUiTvAnswerA == null));
+        Log.d(TAG, "notifyAboutEntering: mUiTvB == null?: " + (mUiTvAnswerB == null));
+        Log.d(TAG, "notifyAboutEntering: mUiTvC == null?: " + (mUiTvAnswerC == null));
         if (!wasNotified){
-            mUiTvQuestion.animate()
+            rl_question.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
                     .setDuration(1000)

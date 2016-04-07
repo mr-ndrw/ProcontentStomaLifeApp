@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="50dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        android:padding="32dp"
+        android:alpha="1"
+        android:background="@drawable/question_box">
+        <FrameLayout
+            android:id="@+id/fl_stomia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/stomia_obrazek_pytanie_frame"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/stomia_obrazek_pytanie"
+                android:padding="20dp"
+                />
+        </FrameLayout>
+        
+        <TextView
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/fl_stomia"
+            android:layout_centerVertical="true"
+            android:text="@string/first_question"
+            android:textAlignment="center"
+            android:textColor="@color/secondary_text"
+            android:textSize="32dp" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/tv_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:background="@drawable/answer_transition"
+        android:padding="30dp"
+        android:alpha="0"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:text="@string/first_question_answer_a"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/tv_b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:background="@drawable/answer_transition"
+        android:padding="30dp"
+        android:alpha="0"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:text="@string/first_question_answer_b"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/tv_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:background="@drawable/answer_transition"
+        android:padding="30dp"
+        android:alpha="0"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:text="@string/first_question_answer_c"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text"
+        android:textSize="32dp" />
+
+</LinearLayout>

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <TextView
         android:id="@+id/tv_question"
         android:layout_width="match_parent"
@@ -13,9 +14,8 @@
         android:layout_marginTop="50dp"
         android:alpha="0"
         android:background="@drawable/question_box"
-        android:paddingBottom="64dp"
-        android:paddingTop="64dp"
-        android:text="@string/second_question"
+        android:padding="64dp"
+        android:text="@string/seventh_question"
         android:textAlignment="center"
         android:textColor="@color/secondary_text"
         android:textSize="40dp" />
@@ -27,12 +27,12 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/spacing_huge"
+        android:alpha="0"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="1"
         android:scaleX="0"
         android:scaleY="0"
-        android:text="@string/second_question_answer_a"
+        android:text="@string/seventh_question_answer_a"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
         android:textSize="32dp" />
@@ -44,12 +44,12 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/spacing_huge"
+        android:alpha="0"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="1"
         android:scaleX="0"
         android:scaleY="0"
-        android:text="@string/second_question_answer_b"
+        android:text="@string/seventh_question_answer_b"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
         android:textSize="32dp" />
@@ -62,14 +62,51 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/spacing_huge"
+        android:alpha="0"
         android:background="@drawable/answer_transition"
         android:padding="30dp"
-        android:alpha="1"
         android:scaleX="0"
         android:scaleY="0"
-        android:text="@string/second_question_answer_c"
+        android:text="@string/seventh_question_answer_c"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text"
+        android:textSize="32dp" />
+
+
+    <TextView
+        android:id="@+id/tv_d"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:alpha="0"
+        android:background="@drawable/answer_transition"
+        android:padding="30dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:text="@string/seventh_question_answer_d"
+        android:textAlignment="center"
+        android:textColor="@color/primary_text"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/tv_e"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/spacing_huge"
+        android:alpha="0"
+        android:background="@drawable/answer_transition"
+        android:padding="30dp"
+        android:scaleX="0"
+        android:scaleY="0"
+        android:text="@string/seventh_question_answer_e"
         android:textAlignment="center"
         android:textColor="@color/primary_text"
         android:textSize="32dp" />
 
 </LinearLayout>
+
+
