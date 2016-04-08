@@ -37,4 +37,9 @@ public class SummingUpFragment extends QuestionFragment {
     public void notifyAboutEntering() {
 
     }
+
+    @Override
+    public int getPosition() {
+        return 10;
+    }
 }

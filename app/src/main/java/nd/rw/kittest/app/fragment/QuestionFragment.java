@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import nd.rw.kittest.R;
+import nd.rw.kittest.app.Answer;
 
 public abstract class QuestionFragment extends Fragment {
 
@@ -14,7 +15,7 @@ public abstract class QuestionFragment extends Fragment {
     protected FragmentQuizFinishedResponder responder;
 
     public interface FragmentQuizFinishedResponder{
-        void finished(String fragmentId, String answer);
+        void finished(int fragmentId, Answer answer);
     }
 
     @Override
@@ -26,20 +27,8 @@ public abstract class QuestionFragment extends Fragment {
         }
     }
 
-    protected String getAnswer(int uiId){
-        switch(uiId){
-            case 1:
-                return "a";
-            case 2:
-                return "b";
-            case 3:
-                return "c";
-            default:{
-                return "e";
-            }
-        }
-    }
-
     public abstract void notifyAboutEntering();
+
+    public abstract int getPosition();
 
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
+import nd.rw.kittest.app.Answer;
 
 /**
  * Created by andrew on 25.03.2016.
@@ -121,7 +122,6 @@ public class EighthQuestionFragment
                 tv.setTextColor(Color.BLACK);
             }
 
-
             String answer;
 
             if (v == mUiTvAnswerA) {
@@ -134,7 +134,7 @@ public class EighthQuestionFragment
                 answer = "ERROR";
             }
 
-            responder.finished(ID, answer);
+            responder.finished(getPosition(), new Answer(getPosition(), answer));
 
             previouslySelectedAnwer = v;
         }
@@ -172,6 +172,11 @@ public class EighthQuestionFragment
                     .start();
             wasNotified = true;
         }
+    }
+
+    @Override
+    public int getPosition() {
+        return 8;
     }
 
 }

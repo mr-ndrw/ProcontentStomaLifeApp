@@ -42,6 +42,11 @@ public class GreetingFragment extends QuestionFragment{
 
     }
 
+    @Override
+    public int getPosition() {
+        return 0;
+    }
+
     public static GreetingFragment newInstance() {
 
         Bundle args = new Bundle();

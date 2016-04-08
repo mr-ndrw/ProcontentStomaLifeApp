@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
+import nd.rw.kittest.app.Answer;
 
 /**
  * Created by andrew on 25.03.2016.
@@ -148,7 +149,7 @@ public class FirstQuestionFragment
                 answer = "ERROR";
             }
 
-            responder.finished(ID, answer);
+            responder.finished(getPosition(), new Answer(getPosition(), answer));
 
             previouslySelectedAnwer = v;
         }
@@ -158,10 +159,6 @@ public class FirstQuestionFragment
 
     @Override
     public void notifyAboutEntering() {
-        Log.d(TAG, "notifyAboutEntering: mUiTvQuestioN == null?: " + (mUiTvQuestion == null));
-        Log.d(TAG, "notifyAboutEntering: mUiTvA == null?: " + (mUiTvAnswerA == null));
-        Log.d(TAG, "notifyAboutEntering: mUiTvB == null?: " + (mUiTvAnswerB == null));
-        Log.d(TAG, "notifyAboutEntering: mUiTvC == null?: " + (mUiTvAnswerC == null));
         if (!wasNotified) {
             rl_question.animate()
                     .alpha(1f)
@@ -194,6 +191,11 @@ public class FirstQuestionFragment
                     .start();
             wasNotified = true;
         }
+    }
+
+    @Override
+    public int getPosition() {
+        return 1;
     }
 
 }

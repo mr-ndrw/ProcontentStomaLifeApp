@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
+import nd.rw.kittest.app.Answer;
 
 /**
  * Created by andrew on 25.03.2016.
@@ -137,7 +138,7 @@ public class ThirdQuestionFragment extends QuestionFragment{
                 answer = "ERROR";
             }
 
-            responder.finished(ID, answer);
+            responder.finished(getPosition(), new Answer(getPosition(), answer));
 
             previouslySelectedAnwer = v;
         }
@@ -178,5 +179,10 @@ public class ThirdQuestionFragment extends QuestionFragment{
                     .start();
             wasNotified = true;
         }
+    }
+
+    @Override
+    public int getPosition() {
+        return 3;
     }
 }

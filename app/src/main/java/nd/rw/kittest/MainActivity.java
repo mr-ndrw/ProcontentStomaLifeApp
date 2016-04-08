@@ -12,11 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.app.AnimatedColor;
+import nd.rw.kittest.app.Answer;
+import nd.rw.kittest.app.AnswerBundle;
 import nd.rw.kittest.app.fragment.EighthQuestionFragment;
 import nd.rw.kittest.app.fragment.FifthQuestionFragment;
 import nd.rw.kittest.app.fragment.FirstQuestionFragment;
@@ -37,7 +38,7 @@ public class MainActivity
     //region Fields
 
     private static final String TAG = "MainActivity";
-    private int currentState = 1;
+    private int fragmentPositionPagerCantGoBeyond = 1;
     AnimatedColor animatedColor;
 
     @Bind(R.id.container)
@@ -45,9 +46,6 @@ public class MainActivity
 
     @Bind(R.id.pbQuizz)
     public ProgressBar mUiProgressBar;
-
-    @Bind(R.id.rl_mainQuizz)
-    public RelativeLayout relativeLayout;
 
     public SectionsPagerAdapter pagerAdapter;
 
@@ -63,6 +61,8 @@ public class MainActivity
     private NinthQuestionFragment ninthQuestionFragment;
     private SummingUpFragment summingUpFragment;
 
+    private AnswerBundle answerBundle;
+
     //endregion Fields
 
     //region AppCompatActivity Methods
@@ -77,7 +77,7 @@ public class MainActivity
         mUiViewPager.setAdapter(pagerAdapter);
         mUiViewPager.addOnPageChangeListener(this);
 
-        mUiProgressBar.setMax((pagerAdapter.getCount()-1) * 100);
+        mUiProgressBar.setMax((pagerAdapter.getCount() - 1) * 100);
 
         greetingFragment = GreetingFragment.newInstance();
         firstQuestionFragment = FirstQuestionFragment.newInstance();
@@ -90,6 +90,8 @@ public class MainActivity
         eighthQuestionFragment = EighthQuestionFragment.newInstance();
         ninthQuestionFragment = NinthQuestionFragment.newInstance();
         summingUpFragment = SummingUpFragment.newInstance();
+
+        answerBundle = new AnswerBundle();
 
         animatedColor = new AnimatedColor(Color.parseColor("#84BD00"), Color.WHITE);
     }
@@ -111,6 +113,27 @@ public class MainActivity
 
     //endregion AppCompatActivity Methods
 
+    //region Public Methods
+
+    //endregion Public Methods
+
+    //region Private Methods
+
+    private void reset(){
+        //  navigate to greeting fragment
+        mUiViewPager.setCurrentItem(0);
+        //  iterate over fragments and reset them
+
+        //  reset bundle
+        answerBundle.reset();
+    }
+
+    private void putAnswerBundle(){
+        //  retrofit
+    }
+
+    //endregion Private Methods
+
     //region Events, Listeners
 
     public void startQuestClicked(View view) {
@@ -127,19 +150,11 @@ public class MainActivity
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
-
         if (position > 0){
             int progressBarPosition = (position + 1) * 100 + (int) (positionOffset * 100);
             mUiProgressBar.setProgress(progressBarPosition);
         }
-
-        if (position == 9) {
-            //  continuously change the bg color
-            relativeLayout.setBackgroundColor(animatedColor.with(positionOffset));
-        }
-
-        if (position == currentState){
+        if (position == fragmentPositionPagerCantGoBeyond){
             if (positionOffset > 0.05){
                 mUiViewPager.setCurrentItem(position, true);
             }
@@ -148,7 +163,6 @@ public class MainActivity
 
     @Override
     public void onPageSelected(int position) {
-        Log.d(TAG, "onPageSelected() called with: " + "position = [" + position + "]");
         QuestionFragment questionFragment = (QuestionFragment) pagerAdapter.getItem(position);
         questionFragment.notifyAboutEntering();
     }
@@ -162,88 +176,19 @@ public class MainActivity
 
     //region FragmentQuizFinishedResponder methods
 
-    boolean wasFirstCorrect, wasSecondCorrect, wasThirdCorrect, wasFourthCorrect;
-
-    @Override
-    public void finished(String fragmentId, String answer) {
-        Log.d(TAG, "finished: fragmentId: " + fragmentId);
-        Log.d(TAG, "finished: answer: " + answer);
-
-        boolean booleanAnswer = Boolean.parseBoolean(answer);
-
-        switch (fragmentId) {
-            case FirstQuestionFragment.ID: {
-                wasFirstCorrect = booleanAnswer;
-                if (currentState >= 2)
-                    return;
-                currentState = 2;
-                break;
-            }
-            case SecondQuestionFragment.ID: {
-                wasSecondCorrect = booleanAnswer;
-                if (currentState >= 3)
-                    return;
-                currentState = 3;
-                break;
-            }
-            case ThirdQuestionFragment.ID: {
-                wasThirdCorrect = booleanAnswer;
-                if (currentState >= 4)
-                    return;
-                currentState = 4;
-                break;
-            }
-            case FourthQuestionFragment.ID: {
-                wasThirdCorrect = booleanAnswer;
-                if (currentState >= 5)
-                    return;
-                currentState = 5;
-                break;
-            }
-            case FifthQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
-                if (currentState >= 6)
-                    return;
-                currentState = 6;
-                break;
-            }
-            case SixthQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
-                if (currentState >= 7)
-                    return;
-                currentState = 7;
-                break;
-            }
-            case SeventhQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
-                if (currentState >= 8)
-                    return;
-                currentState = 8;
-                break;
-            }
-            case EighthQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
-                if (currentState >= 9)
-                    return;
-                currentState = 9;
-                break;
-            }
-            case NinthQuestionFragment.ID: {
-                wasFourthCorrect = booleanAnswer;
-                if (currentState >= 10)
-                    return;
-                currentState = 10;
-                break;
-            }
-
-            default: {
-                Log.d(TAG, "finished: defaulted. Should not. What the hell.");
-            }
-        }
+    private void setFragmentPositionPagerCantGoBeyond(int fragmentState){
+        if(fragmentPositionPagerCantGoBeyond > fragmentState)
+            return;
+        fragmentPositionPagerCantGoBeyond = fragmentState+1;
     }
 
-    public interface StateFragmentNotifier {
-        void notifyFragment();
+    @Override
+    public void finished(int fragmentPositionInPager, Answer answer) {
+        Log.d(TAG, "finished: fragmentPositionInPager: " + fragmentPositionInPager);
+        Log.d(TAG, "finished: answer: " + answer.answers);
+
+        setFragmentPositionPagerCantGoBeyond(fragmentPositionInPager);
+        answerBundle.answers.add(fragmentPositionInPager - 1, answer);
     }
 
     //endregion FragmentQuizFinishedResponder methods
