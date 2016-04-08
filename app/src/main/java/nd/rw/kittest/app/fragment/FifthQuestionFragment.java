@@ -61,66 +61,84 @@ public class FifthQuestionFragment
         final View view = inflater.inflate(R.layout.fragment_5_question, container, false);
         ButterKnife.bind(this, view);
 
-        correctTvAnswer = mUiTvAnswerA;
-
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
-
+        mUiTvAnswerD.setOnClickListener(answerListener);
         if (wasNotified){
-            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
-            transition.startTransition(0);
-            correctTvAnswer.setTextColor(Color.WHITE);
+            pronounceSelectedAnswers(isASelected, mUiTvAnswerA);
+            pronounceSelectedAnswers(isBSelected, mUiTvAnswerB);
+            pronounceSelectedAnswers(isCSelected, mUiTvAnswerC);
+            pronounceSelectedAnswers(isDSelected, mUiTvAnswerD);
             mUiTvQuestion.setAlpha(1);
-            mUiTvAnswerA.setAlpha(1);
-            mUiTvAnswerA.setScaleX(1);
-            mUiTvAnswerA.setScaleY(1);
-            mUiTvAnswerB.setAlpha(1);
-            mUiTvAnswerB.setScaleX(1);
-            mUiTvAnswerB.setScaleY(1);
-            mUiTvAnswerC.setAlpha(1);
-            mUiTvAnswerC.setScaleX(1);
-            mUiTvAnswerC.setScaleY(1);
-            mUiTvAnswerD.setAlpha(1);
-            mUiTvAnswerD.setScaleX(1);
-            mUiTvAnswerD.setScaleY(1);
-            previouslySelectedAnwer = correctTvAnswer;
+            reanimateAnswers(mUiTvAnswerA);
+            reanimateAnswers(mUiTvAnswerB);
+            reanimateAnswers(mUiTvAnswerC);
+            reanimateAnswers(mUiTvAnswerD);
         }
 
 
         return view;
     }
 
-    private View previouslySelectedAnwer;
+    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
+        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
+        if (wasSelected) {
+            transition.startTransition(0);
+            answer.setTextColor(Color.WHITE);
+        }
+    }
+
+    private void reanimateAnswers(TextView textView){
+        textView.setAlpha(1);
+        textView.setScaleX(1);
+        textView.setScaleY(1);
+    }
 
     private int transitionTime = 500;
+    private boolean isASelected;
+    private boolean isBSelected;
+    private boolean isCSelected;
+    private boolean isDSelected;
 
     public View.OnClickListener answerListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v == previouslySelectedAnwer)
-                return;
-
-            TransitionDrawable transition = (TransitionDrawable) v.getBackground();
-            transition.startTransition(transitionTime);
             TextView tv = (TextView) v;
-            tv.setTextColor(Color.WHITE);
-            if (previouslySelectedAnwer != null) {
-                transition = (TransitionDrawable) previouslySelectedAnwer.getBackground();
-                transition.reverseTransition(transitionTime);
-                tv = (TextView) previouslySelectedAnwer;
+            TransitionDrawable transition = (TransitionDrawable) v.getBackground();
+            if (tv.getCurrentTextColor() == Color.WHITE) {
                 tv.setTextColor(Color.BLACK);
-            }
-
-            if (v == correctTvAnswer){
-                responder.finished(ID, "true");
+                transition.reverseTransition(transitionTime);
             } else {
-                responder.finished(ID, "false");
+                tv.setTextColor(Color.WHITE);
+                transition.startTransition(transitionTime);
             }
 
-            previouslySelectedAnwer = v;
+            if (tv == mUiTvAnswerA) {
+                isASelected = !isASelected;
+            } else if (tv == mUiTvAnswerB) {
+                isBSelected = !isBSelected;
+            } else if (tv == mUiTvAnswerC) {
+                isCSelected = !isCSelected;
+            } else if (tv == mUiTvAnswerD) {
+                isDSelected = !isDSelected;
+            }
+            String answer = buildAnswer();
+
+            responder.finished(ID, answer);
+
         }
     };
+
+    private String buildAnswer(){
+        String answer = "";
+        answer += isASelected ? "a" : "";
+        answer += isBSelected ? "b" : "";
+        answer += isCSelected ? "c" : "";
+        answer += isDSelected ? "d" : "";
+
+        return answer;
+    }
 
     //endregion Fragment methods
 

@@ -32,8 +32,6 @@ public class EighthQuestionFragment
     @Bind(R.id.tv_b)
     public TextView mUiTvAnswerB;
 
-    private TextView correctTvAnswer;
-
     public boolean wasNotified = false;
 
     //region Methods
@@ -57,29 +55,51 @@ public class EighthQuestionFragment
         final View view = inflater.inflate(R.layout.fragment_8_question, container, false);
         ButterKnife.bind(this, view);
 
-        correctTvAnswer = mUiTvAnswerA;
-
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
 
-        if (wasNotified){
-            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
-            transition.startTransition(0);
-            correctTvAnswer.setTextColor(Color.WHITE);
+        if (wasNotified) {
             mUiTvQuestion.setAlpha(1);
-            mUiTvAnswerA.setAlpha(1);
-            mUiTvAnswerA.setScaleX(1);
-            mUiTvAnswerA.setScaleY(1);
-            mUiTvAnswerB.setAlpha(1);
-            mUiTvAnswerB.setScaleX(1);
-            mUiTvAnswerB.setScaleY(1);
-            previouslySelectedAnwer = correctTvAnswer;
+            TextView tvToPronounce = null;
+            switch(currentlySelectedAnswerNumber){
+                case 1:
+                    tvToPronounce = mUiTvAnswerA;
+                    break;
+                case 2:
+                    tvToPronounce = mUiTvAnswerB;
+                    break;
+            }
+            pronounceSelectedAnswers(true, tvToPronounce);
+            reanimateAnswers(mUiTvAnswerA);
+            reanimateAnswers(mUiTvAnswerB);
+            previouslySelectedAnwer = tvToPronounce;
         }
-
-
         return view;
     }
 
+    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
+        if (answer == null) {
+            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
+
+            return;
+        }
+        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
+        if (wasSelected){
+            transition.reverseTransition(0);
+            answer.setTextColor(Color.WHITE);
+        } else {
+            transition.startTransition(0);
+            answer.setTextColor(Color.BLACK);
+        }
+    }
+
+    private void reanimateAnswers(TextView textView){
+        textView.setAlpha(1);
+        textView.setScaleX(1);
+        textView.setScaleY(1);
+    }
+
+    private int currentlySelectedAnswerNumber;
     private View previouslySelectedAnwer;
 
     private int transitionTime = 500;
@@ -101,11 +121,20 @@ public class EighthQuestionFragment
                 tv.setTextColor(Color.BLACK);
             }
 
-            if (v == correctTvAnswer){
-                responder.finished(ID, "true");
+
+            String answer;
+
+            if (v == mUiTvAnswerA) {
+                answer = "a";
+                currentlySelectedAnswerNumber = 1;
+            } else if (v == mUiTvAnswerB) {
+                answer = "b";
+                currentlySelectedAnswerNumber = 2;
             } else {
-                responder.finished(ID, "false");
+                answer = "ERROR";
             }
+
+            responder.finished(ID, answer);
 
             previouslySelectedAnwer = v;
         }

@@ -38,8 +38,6 @@ public class FirstQuestionFragment
     @Bind(R.id.rl_question)
     public RelativeLayout rl_question;
 
-    private TextView correctTvAnswer;
-
     public boolean wasNotified = false;
 
     //region Methods
@@ -60,40 +58,59 @@ public class FirstQuestionFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        Log.d(TAG, "onCreateView: wasNotified?: " + wasNotified) ;
-        Log.d(TAG, "onCreateView: correctTvAnswer == null?: " + (correctTvAnswer == null));
-        Log.d(TAG, "onCreateView: previouslySelectedAnswer == null?: " + (previouslySelectedAnwer == null));
         final View view = inflater.inflate(R.layout.fragment_1_question, container, false);
         ButterKnife.bind(this, view);
-
-        correctTvAnswer = mUiTvAnswerA;
 
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
 
-        if (wasNotified){
-            TransitionDrawable transition = (TransitionDrawable) correctTvAnswer.getBackground();
-            transition.startTransition(0);
-            correctTvAnswer.setTextColor(Color.WHITE);
+        if (wasNotified) {
             mUiTvQuestion.setAlpha(1);
-            mUiTvAnswerA.setAlpha(1);
-            mUiTvAnswerA.setScaleX(1);
-            mUiTvAnswerA.setScaleY(1);
-            mUiTvAnswerB.setAlpha(1);
-            mUiTvAnswerB.setScaleX(1);
-            mUiTvAnswerB.setScaleY(1);
-            mUiTvAnswerC.setAlpha(1);
-            mUiTvAnswerC.setScaleX(1);
-            mUiTvAnswerC.setScaleY(1);
-            previouslySelectedAnwer = correctTvAnswer;
+            TextView tvToPronounce = null;
+            switch(currentlySelectedAnswerNumber){
+                case 1:
+                    tvToPronounce = mUiTvAnswerA;
+                    break;
+                case 2:
+                    tvToPronounce = mUiTvAnswerB;
+                    break;
+                case 3:
+                    tvToPronounce = mUiTvAnswerC;
+                    break;
+            }
+            pronounceSelectedAnswers(true, tvToPronounce);
+            reanimateAnswers(mUiTvAnswerA);
+            reanimateAnswers(mUiTvAnswerB);
+            reanimateAnswers(mUiTvAnswerC);
+            previouslySelectedAnwer = tvToPronounce;
         }
-
-
         return view;
     }
 
+    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
+        if (answer == null) {
+            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
+
+            return;
+        }
+        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
+        if (wasSelected){
+            transition.reverseTransition(0);
+            answer.setTextColor(Color.WHITE);
+        } else {
+            transition.startTransition(0);
+            answer.setTextColor(Color.BLACK);
+        }
+    }
+
+    private void reanimateAnswers(TextView textView){
+        textView.setAlpha(1);
+        textView.setScaleX(1);
+        textView.setScaleY(1);
+    }
+
+    private int currentlySelectedAnswerNumber;
     private View previouslySelectedAnwer;
 
     private int transitionTime = 500;
@@ -115,11 +132,23 @@ public class FirstQuestionFragment
                 tv.setTextColor(Color.BLACK);
             }
 
-            if (v == correctTvAnswer){
-                responder.finished(ID, "true");
+
+            String answer;
+
+            if (v == mUiTvAnswerA) {
+                answer = "a";
+                currentlySelectedAnswerNumber = 1;
+            } else if (v == mUiTvAnswerB) {
+                answer = "b";
+                currentlySelectedAnswerNumber = 2;
+            } else if (v == mUiTvAnswerC) {
+                answer = "c";
+                currentlySelectedAnswerNumber = 3;
             } else {
-                responder.finished(ID, "false");
+                answer = "ERROR";
             }
+
+            responder.finished(ID, answer);
 
             previouslySelectedAnwer = v;
         }
@@ -133,7 +162,7 @@ public class FirstQuestionFragment
         Log.d(TAG, "notifyAboutEntering: mUiTvA == null?: " + (mUiTvAnswerA == null));
         Log.d(TAG, "notifyAboutEntering: mUiTvB == null?: " + (mUiTvAnswerB == null));
         Log.d(TAG, "notifyAboutEntering: mUiTvC == null?: " + (mUiTvAnswerC == null));
-        if (!wasNotified){
+        if (!wasNotified) {
             rl_question.animate()
                     .alpha(1f)
                     .setInterpolator(new FastOutSlowInInterpolator())
