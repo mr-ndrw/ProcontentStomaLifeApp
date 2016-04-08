@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import nd.rw.kittest.app.AnimatedColor;
 import nd.rw.kittest.app.Answer;
 import nd.rw.kittest.app.AnswerBundle;
+import nd.rw.kittest.app.AnswerService;
 import nd.rw.kittest.app.fragment.EighthQuestionFragment;
 import nd.rw.kittest.app.fragment.FifthQuestionFragment;
 import nd.rw.kittest.app.fragment.FirstQuestionFragment;
@@ -30,6 +31,8 @@ import nd.rw.kittest.app.fragment.SeventhQuestionFragment;
 import nd.rw.kittest.app.fragment.SixthQuestionFragment;
 import nd.rw.kittest.app.fragment.SummingUpFragment;
 import nd.rw.kittest.app.fragment.ThirdQuestionFragment;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity
         extends AppCompatActivity
@@ -62,6 +65,7 @@ public class MainActivity
     private SummingUpFragment summingUpFragment;
 
     private AnswerBundle answerBundle;
+    private AnswerService answerService;
 
     //endregion Fields
 
@@ -92,6 +96,11 @@ public class MainActivity
         summingUpFragment = SummingUpFragment.newInstance();
 
         answerBundle = new AnswerBundle();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.110:3000")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        answerService = retrofit.create(AnswerService.class);
 
         animatedColor = new AnimatedColor(Color.parseColor("#84BD00"), Color.WHITE);
     }
@@ -129,7 +138,7 @@ public class MainActivity
     }
 
     private void putAnswerBundle(){
-        //  retrofit
+        answerService.putAnswerBundle(answerBundle);
     }
 
     //endregion Private Methods
