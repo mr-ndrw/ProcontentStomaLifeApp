@@ -106,11 +106,8 @@ public abstract class QuestionFragment extends Fragment {
         }
         TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
         if (wasSelected){
-            transition.reverseTransition(0);
-            answer.setTextColor(Color.WHITE);
-        } else {
             transition.startTransition(0);
-            answer.setTextColor(Color.BLACK);
+            answer.setTextColor(Color.WHITE);
         }
     }
 

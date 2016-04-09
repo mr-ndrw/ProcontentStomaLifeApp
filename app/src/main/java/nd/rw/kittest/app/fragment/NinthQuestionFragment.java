@@ -100,6 +100,8 @@ public class NinthQuestionFragment
         mUiTvAnswerC.setOnClickListener(answerListener);
 
         if (wasNotified) {
+            wasFinishAnimated = false;
+            animateFinishButton();
             mUiTvQuestion.setAlpha(1);
             TextView tvToPronounce = null;
             switch(currentlySelectedAnswerNumber){
@@ -143,8 +145,6 @@ public class NinthQuestionFragment
                 tv = (TextView) previouslySelectedAnwer;
                 tv.setTextColor(Color.BLACK);
             }
-
-
             String answer;
 
             if (v == mUiTvAnswerA) {
@@ -159,9 +159,8 @@ public class NinthQuestionFragment
             } else {
                 answer = "ERROR";
             }
-
             responder.finished(getPosition(), new Answer(getPosition(), answer));
-
+            animateFinishButton();
             previouslySelectedAnwer = v;
         }
     };
