@@ -10,16 +10,12 @@ import nd.rw.kittest.app.Answer;
  */
 public class AnswerBundle {
 
-    public Date dateTime;
+    public Date dateTime = new Date();
 
-    public ArrayList<Answer> answers = new ArrayList<>(9);
-
-    public AnswerBundle() {
-        dateTime = new Date();
-    }
+    public Answer[] answers = new Answer[9];
 
     public void reset(){
-        answers = new ArrayList<>(9);
+        answers = new Answer[9];
         dateTime = new Date();
     }
 }

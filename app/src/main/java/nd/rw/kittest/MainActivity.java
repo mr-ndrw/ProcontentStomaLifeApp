@@ -223,10 +223,10 @@ public class MainActivity
     @Override
     public void finished(int fragmentPositionInPager, Answer answer) {
         Log.d(TAG, "finished: fragmentPositionInPager: " + fragmentPositionInPager);
-        Log.d(TAG, "finished: answer: " + answer.answers);
-        Log.d(TAG, "finished: answerBundle size: " + answerBundle.answers.size());
+        Log.d(TAG, "finished: answer id : " + answer.answerNumber + ", answer answer: " + answer.answers);
+        Log.d(TAG, "finished: answerBundle size: " + answerBundle.answers.length);
         setFragmentPositionPagerCantGoBeyond(fragmentPositionInPager);
-        answerBundle.answers.add(fragmentPositionInPager - 1, answer);
+        answerBundle.answers[(fragmentPositionInPager - 1)] =  answer;
     }
 
     //endregion FragmentQuizFinishedResponder methods
