@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,6 +33,9 @@ import nd.rw.kittest.app.fragment.SeventhQuestionFragment;
 import nd.rw.kittest.app.fragment.SixthQuestionFragment;
 import nd.rw.kittest.app.fragment.SummingUpFragment;
 import nd.rw.kittest.app.fragment.ThirdQuestionFragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -49,6 +54,12 @@ public class MainActivity
 
     @Bind(R.id.pbQuizz)
     public ProgressBar mUiProgressBar;
+
+    @Bind(R.id.btn_reset)
+    public Button mUiBtnReset;
+
+    @Bind(R.id.rl_mainQuizz)
+    public RelativeLayout mUiRlMainQuiz;
 
     public SectionsPagerAdapter pagerAdapter;
 
@@ -101,7 +112,6 @@ public class MainActivity
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         answerService = retrofit.create(AnswerService.class);
-
         animatedColor = new AnimatedColor(Color.parseColor("#84BD00"), Color.WHITE);
     }
 
@@ -138,7 +148,18 @@ public class MainActivity
     }
 
     private void putAnswerBundle(){
-        answerService.putAnswerBundle(answerBundle);
+        Call<AnswerBundle> call = answerService.putAnswerBundle(answerBundle);
+        call.enqueue(new Callback<AnswerBundle>() {
+            @Override
+            public void onResponse(Call<AnswerBundle> call, Response<AnswerBundle> response) {
+                Log.d(TAG, "onResponse: response: " + response.message());
+            }
+
+            @Override
+            public void onFailure(Call<AnswerBundle> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+            }
+        });
     }
 
     //endregion Private Methods
@@ -159,6 +180,8 @@ public class MainActivity
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
+
         if (position > 0){
             int progressBarPosition = (position + 1) * 100 + (int) (positionOffset * 100);
             mUiProgressBar.setProgress(progressBarPosition);
@@ -174,6 +197,12 @@ public class MainActivity
     public void onPageSelected(int position) {
         QuestionFragment questionFragment = (QuestionFragment) pagerAdapter.getItem(position);
         questionFragment.prepareForEntering();
+        //  on navigating to summing up page we should fire up the retrofit and post the result
+        //  TODO iterate over fragments and put them in mode which prevents entering answers if we're on last page?
+        if (position == 10){
+            this.mUiBtnReset.setVisibility(View.VISIBLE);
+            this.putAnswerBundle();
+        }
     }
 
     @Override
@@ -195,7 +224,7 @@ public class MainActivity
     public void finished(int fragmentPositionInPager, Answer answer) {
         Log.d(TAG, "finished: fragmentPositionInPager: " + fragmentPositionInPager);
         Log.d(TAG, "finished: answer: " + answer.answers);
-
+        Log.d(TAG, "finished: answerBundle size: " + answerBundle.answers.size());
         setFragmentPositionPagerCantGoBeyond(fragmentPositionInPager);
         answerBundle.answers.add(fragmentPositionInPager - 1, answer);
     }
