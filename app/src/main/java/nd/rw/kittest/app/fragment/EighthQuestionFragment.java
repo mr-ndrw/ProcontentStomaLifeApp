@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
@@ -21,6 +24,8 @@ import nd.rw.kittest.app.Answer;
  */
 public class EighthQuestionFragment
         extends QuestionFragment {
+
+    //region Fields
 
     public static final String ID = "EighthQuestionFragment";
     private static final String TAG = "EighthQuestionFragment";
@@ -33,22 +38,16 @@ public class EighthQuestionFragment
     @Bind(R.id.tv_b)
     public TextView mUiTvAnswerB;
 
-    public boolean wasNotified = false;
+    //endregion Fields
 
-    //region Methods
+    //region Fragment methods
 
     public static EighthQuestionFragment newInstance() {
         Bundle args = new Bundle();
-
         EighthQuestionFragment fragment = new EighthQuestionFragment();
-
         fragment.setArguments(args);
         return fragment;
     }
-
-    //endregion Methods
-
-    //region Fragment methods
 
     @Nullable
     @Override
@@ -142,41 +141,26 @@ public class EighthQuestionFragment
 
     //endregion Fragment methods
 
+    //region Question Methods
+
     @Override
-    public void notifyAboutEntering() {
-        if (!wasNotified){
-            int delay = 600;
-            int delayValue = 300;
-            int answerAnimationDuration = 500;
-            mUiTvQuestion.animate()
-                    .alpha(1f)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(1000)
-                    .start();
-            mUiTvAnswerA.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerB.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            wasNotified = true;
-        }
+    public View getQuestionView() {
+        return mUiTvQuestion;
+    }
+
+    @Override
+    public List<View> getViewsForAnimation() {
+        List<View> viewList = new LinkedList<>();
+        viewList.add(mUiTvAnswerA);
+        viewList.add(mUiTvAnswerB);
+        return viewList;
     }
 
     @Override
     public int getPosition() {
         return 8;
     }
+
+    //endregion Question Methods
 
 }

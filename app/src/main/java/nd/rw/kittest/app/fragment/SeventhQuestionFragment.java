@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
@@ -21,6 +24,8 @@ import nd.rw.kittest.app.Answer;
  */
 public class SeventhQuestionFragment
         extends QuestionFragment {
+
+    //region Fields
 
     public static final String ID = "SeventhQuestionFragment";
     private static final String TAG = "SeventhQuestionFragment";
@@ -39,9 +44,9 @@ public class SeventhQuestionFragment
     @Bind(R.id.tv_e)
     public TextView mUiTvAnswerE;
 
-    public boolean wasNotified = false;
+    //endregion Fields
 
-    //region Methods
+    //region Fragment methods
 
     public static SeventhQuestionFragment newInstance() {
         Bundle args = new Bundle();
@@ -52,9 +57,6 @@ public class SeventhQuestionFragment
         return fragment;
     }
 
-    //endregion Methods
-
-    //region Fragment methods
 
     @Nullable
     @Override
@@ -81,8 +83,6 @@ public class SeventhQuestionFragment
             reanimateAnswers(mUiTvAnswerD);
             reanimateAnswers(mUiTvAnswerE);
         }
-
-
         return view;
     }
 
@@ -144,73 +144,34 @@ public class SeventhQuestionFragment
         answer += isBSelected ? "b" : "";
         answer += isCSelected ? "c" : "";
         answer += isDSelected ? "d" : "";
-
+        answer += isESelected ? "e" : "";
         return answer;
     }
     //endregion Fragment methods
 
+    //region Question Methods
+
     @Override
-    public void notifyAboutEntering() {
-        if (!wasNotified){
-            int delay = 600;
-            int delayValue = 100;
-            int answerAnimationDuration = 500;
-            mUiTvQuestion.animate()
-                    .alpha(1f)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(1000)
-                    .start();
-            mUiTvAnswerA.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerB.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerC.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerD.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerE.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            wasNotified = true;
-        }
+    public View getQuestionView() {
+        return mUiTvQuestion;
+    }
+
+    @Override
+    public List<View> getViewsForAnimation() {
+        List<View> viewList = new LinkedList<>();
+        viewList.add(mUiTvAnswerA);
+        viewList.add(mUiTvAnswerB);
+        viewList.add(mUiTvAnswerC);
+        viewList.add(mUiTvAnswerD);
+        viewList.add(mUiTvAnswerE);
+        return viewList;
     }
 
     @Override
     public int getPosition() {
         return 7;
     }
+
+    //endregion Question Methods
 
 }

@@ -173,7 +173,7 @@ public class MainActivity
     @Override
     public void onPageSelected(int position) {
         QuestionFragment questionFragment = (QuestionFragment) pagerAdapter.getItem(position);
-        questionFragment.notifyAboutEntering();
+        questionFragment.prepareForEntering();
     }
 
     @Override
