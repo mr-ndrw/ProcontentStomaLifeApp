@@ -83,20 +83,6 @@ public class FourthQuestionFragment extends QuestionFragment{
 
     //endregion Fragment Methods
 
-    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
-        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
-        if (wasSelected) {
-            transition.startTransition(0);
-            answer.setTextColor(Color.WHITE);
-        }
-    }
-
-    private void reanimateAnswers(TextView textView){
-        textView.setAlpha(1);
-        textView.setScaleX(1);
-        textView.setScaleY(1);
-    }
-
     private int transitionTime = 500;
     private boolean isASelected;
     private boolean isBSelected;

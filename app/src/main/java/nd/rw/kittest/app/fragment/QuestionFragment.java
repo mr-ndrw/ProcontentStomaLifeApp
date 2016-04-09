@@ -1,5 +1,7 @@
 package nd.rw.kittest.app.fragment;
 
+import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -93,6 +96,28 @@ public abstract class QuestionFragment extends Fragment {
                 .setDuration(duration)
                 .setInterpolator(new FastOutSlowInInterpolator())
                 .start();
+    }
+
+    protected void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
+        if (answer == null) {
+            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
+
+            return;
+        }
+        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
+        if (wasSelected){
+            transition.reverseTransition(0);
+            answer.setTextColor(Color.WHITE);
+        } else {
+            transition.startTransition(0);
+            answer.setTextColor(Color.BLACK);
+        }
+    }
+
+    protected void reanimateAnswers(TextView textView){
+        textView.setAlpha(1);
+        textView.setScaleX(1);
+        textView.setScaleY(1);
     }
 
     public abstract View getQuestionView();

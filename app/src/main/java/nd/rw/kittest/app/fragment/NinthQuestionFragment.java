@@ -122,28 +122,6 @@ public class NinthQuestionFragment
         return view;
     }
 
-    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
-        if (answer == null) {
-            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
-
-            return;
-        }
-        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
-        if (wasSelected){
-            transition.reverseTransition(0);
-            answer.setTextColor(Color.WHITE);
-        } else {
-            transition.startTransition(0);
-            answer.setTextColor(Color.BLACK);
-        }
-    }
-
-    private void reanimateAnswers(TextView textView){
-        textView.setAlpha(1);
-        textView.setScaleX(1);
-        textView.setScaleY(1);
-    }
-
     private int currentlySelectedAnswerNumber;
     private View previouslySelectedAnwer;
 
