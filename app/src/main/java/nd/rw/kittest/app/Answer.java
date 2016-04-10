@@ -9,6 +9,7 @@ public class Answer {
     public String answers;
 
     public Answer(int answerNumber, String answer) {
+        this.answerNumber = answerNumber;
         this.answers = answer;
     }
 }

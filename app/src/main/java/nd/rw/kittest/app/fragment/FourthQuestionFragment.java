@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
@@ -22,6 +25,8 @@ import nd.rw.kittest.app.Answer;
  * Created by andrew on 25.03.2016.
  */
 public class FourthQuestionFragment extends QuestionFragment{
+
+    //region Fields
 
     public static final String ID = "FourthFragment";
     public static final String TAG = "FourthFragment";
@@ -39,12 +44,12 @@ public class FourthQuestionFragment extends QuestionFragment{
     @Bind(R.id.tv_question)
     public TextView mUiTvQuestion;
 
-    private boolean wasNotified = false;
+    //endregion Fields
+
+    //region Fragment Methods
 
     public static FourthQuestionFragment newInstance() {
-
         Bundle args = new Bundle();
-
         FourthQuestionFragment fragment = new FourthQuestionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -73,24 +78,10 @@ public class FourthQuestionFragment extends QuestionFragment{
             reanimateAnswers(mUiTvAnswerC);
             reanimateAnswers(mUiTvAnswerD);
         }
-
-
         return view;
     }
 
-    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
-        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
-        if (wasSelected) {
-            transition.startTransition(0);
-            answer.setTextColor(Color.WHITE);
-        }
-    }
-
-    private void reanimateAnswers(TextView textView){
-        textView.setAlpha(1);
-        textView.setScaleX(1);
-        textView.setScaleY(1);
-    }
+    //endregion Fragment Methods
 
     private int transitionTime = 500;
     private boolean isASelected;
@@ -137,60 +128,28 @@ public class FourthQuestionFragment extends QuestionFragment{
         return answer;
     }
 
+    //region Question Methods
+
     @Override
-    public void notifyAboutEntering() {
-        if (!wasNotified){
-            Log.d(TAG, "notifyFragment: animating");
-            int delay = 600;
-            int delayValue = 200;
-            int answerAnimationDuration = 500;
-            mUiTvQuestion.animate()
-                    .alpha(1f)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(1000)
-                    .start();
-            mUiTvAnswerA.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerB.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerC.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            delay += delayValue;
-            mUiTvAnswerD.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(delay)
-                    .setDuration(answerAnimationDuration)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            wasNotified = true;
-        }
+    public View getQuestionView() {
+        return mUiTvQuestion;
+    }
+
+    @Override
+    public List<View> getViewsForAnimation() {
+        List<View> viewList = new LinkedList<>();
+        viewList.add(mUiTvAnswerA);
+        viewList.add(mUiTvAnswerB);
+        viewList.add(mUiTvAnswerC);
+        viewList.add(mUiTvAnswerD);
+        return viewList;
     }
 
     @Override
     public int getPosition() {
         return 4;
     }
+
+    //endregion Question Methods
 
 }

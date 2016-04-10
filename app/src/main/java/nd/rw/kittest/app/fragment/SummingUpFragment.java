@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import nd.rw.kittest.R;
 
 /**
@@ -34,8 +36,13 @@ public class SummingUpFragment extends QuestionFragment {
     }
 
     @Override
-    public void notifyAboutEntering() {
+    public View getQuestionView() {
+        return null;
+    }
 
+    @Override
+    public List<View> getViewsForAnimation() {
+        return null;
     }
 
     @Override

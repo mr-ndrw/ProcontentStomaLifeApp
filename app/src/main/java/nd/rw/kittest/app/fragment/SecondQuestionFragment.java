@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
@@ -20,6 +23,8 @@ import nd.rw.kittest.app.Answer;
  * Created by andrew on 25.03.2016.
  */
 public class SecondQuestionFragment extends QuestionFragment{
+
+    //region Fields
 
     public static final String ID = "SecondFragment";
     private static final String TAG = "SecondFragment";
@@ -34,7 +39,9 @@ public class SecondQuestionFragment extends QuestionFragment{
     @Bind(R.id.tv_c)
     public TextView mUiTvAnswerC;
 
-    private boolean wasNotified;
+    //endregion Fields
+
+    //region Fragment Methods
 
     public static SecondQuestionFragment newInstance() {
 
@@ -78,27 +85,8 @@ public class SecondQuestionFragment extends QuestionFragment{
         return view;
     }
 
-    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
-        if (answer == null) {
-            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
+    //endregion Fragment Methods
 
-            return;
-        }
-        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
-        if (wasSelected){
-            transition.reverseTransition(0);
-            answer.setTextColor(Color.WHITE);
-        } else {
-            transition.startTransition(0);
-            answer.setTextColor(Color.BLACK);
-        }
-    }
-
-    private void reanimateAnswers(TextView textView){
-        textView.setAlpha(1);
-        textView.setScaleX(1);
-        textView.setScaleY(1);
-    }
 
     private int currentlySelectedAnswerNumber;
     private View previouslySelectedAnwer;
@@ -121,10 +109,7 @@ public class SecondQuestionFragment extends QuestionFragment{
                 tv = (TextView) previouslySelectedAnwer;
                 tv.setTextColor(Color.BLACK);
             }
-
-
             String answer;
-
             if (v == mUiTvAnswerA) {
                 answer = "a";
                 currentlySelectedAnswerNumber = 1;
@@ -144,46 +129,26 @@ public class SecondQuestionFragment extends QuestionFragment{
         }
     };
 
+    //region Question Methods
+
     @Override
-    public void notifyAboutEntering() {
-        Log.d(TAG, "notifyAboutEntering: wasNotified?: " + wasNotified);
-        if (!wasNotified){
-            Log.d(TAG, "notifyFragment: animating");
-            mUiTvQuestion.animate()
-                    .alpha(1f)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(1000)
-                    .start();
-            mUiTvAnswerA.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(600)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            mUiTvAnswerB.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(900)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            mUiTvAnswerC.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(1200)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            wasNotified = true;
-        }
+    public View getQuestionView() {
+        return mUiTvQuestion;
+    }
+
+    @Override
+    public List<View> getViewsForAnimation() {
+        List<View> viewList = new LinkedList<>();
+        viewList.add(mUiTvAnswerA);
+        viewList.add(mUiTvAnswerB);
+        viewList.add(mUiTvAnswerC);
+        return viewList;
     }
 
     @Override
     public int getPosition() {
         return 2;
     }
+
+    //endregion Question Methods
 }

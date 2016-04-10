@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import nd.rw.kittest.R;
@@ -22,6 +25,8 @@ import nd.rw.kittest.app.Answer;
  */
 public class FirstQuestionFragment
         extends QuestionFragment {
+
+    //region Fields
 
     public static final String ID = "FirstFragment";
     private static final String TAG = "FirstFragment";
@@ -39,15 +44,13 @@ public class FirstQuestionFragment
     @Bind(R.id.rl_question)
     public RelativeLayout rl_question;
 
-    public boolean wasNotified = false;
+    //endregion Fields
 
     //region Methods
 
     public static FirstQuestionFragment newInstance() {
         Bundle args = new Bundle();
-
         FirstQuestionFragment fragment = new FirstQuestionFragment();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,7 +68,7 @@ public class FirstQuestionFragment
         mUiTvAnswerA.setOnClickListener(answerListener);
         mUiTvAnswerB.setOnClickListener(answerListener);
         mUiTvAnswerC.setOnClickListener(answerListener);
-
+        Log.d(TAG, "onCreateView: wasNotified: " + wasNotified);
         if (wasNotified) {
             mUiTvQuestion.setAlpha(1);
             TextView tvToPronounce = null;
@@ -89,27 +92,7 @@ public class FirstQuestionFragment
         return view;
     }
 
-    private void pronounceSelectedAnswers(boolean wasSelected, TextView answer){
-        if (answer == null) {
-            Log.e(TAG, "pronounceSelectedAnswers: answer was null");
-
-            return;
-        }
-        TransitionDrawable transition = (TransitionDrawable) answer.getBackground();
-        if (wasSelected){
-            transition.reverseTransition(0);
-            answer.setTextColor(Color.WHITE);
-        } else {
-            transition.startTransition(0);
-            answer.setTextColor(Color.BLACK);
-        }
-    }
-
-    private void reanimateAnswers(TextView textView){
-        textView.setAlpha(1);
-        textView.setScaleX(1);
-        textView.setScaleY(1);
-    }
+    //endregion Fragment methods
 
     private int currentlySelectedAnswerNumber;
     private View previouslySelectedAnwer;
@@ -132,8 +115,6 @@ public class FirstQuestionFragment
                 tv = (TextView) previouslySelectedAnwer;
                 tv.setTextColor(Color.BLACK);
             }
-
-
             String answer;
 
             if (v == mUiTvAnswerA) {
@@ -155,47 +136,28 @@ public class FirstQuestionFragment
         }
     };
 
-    //endregion Fragment methods
+    //region Question Methods
+
 
     @Override
-    public void notifyAboutEntering() {
-        if (!wasNotified) {
-            rl_question.animate()
-                    .alpha(1f)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .setDuration(1000)
-                    .start();
-            mUiTvAnswerA.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(600)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            mUiTvAnswerB.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(900)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            mUiTvAnswerC.animate()
-                    .alpha(1f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setStartDelay(1200)
-                    .setDuration(500)
-                    .setInterpolator(new FastOutSlowInInterpolator())
-                    .start();
-            wasNotified = true;
-        }
+    public View getQuestionView() {
+        return rl_question;
+    }
+
+    @Override
+    public List<View> getViewsForAnimation() {
+        List<View> viewList = new LinkedList<>();
+        viewList.add(mUiTvAnswerA);
+        viewList.add(mUiTvAnswerB);
+        viewList.add(mUiTvAnswerC);
+        return viewList;
     }
 
     @Override
     public int getPosition() {
         return 1;
     }
+
+    //endregion Question Methods
 
 }
