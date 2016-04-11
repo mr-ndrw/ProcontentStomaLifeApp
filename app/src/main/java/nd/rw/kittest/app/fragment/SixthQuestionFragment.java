@@ -139,6 +139,14 @@ public class SixthQuestionFragment
     //region Question Methods
 
     @Override
+    public void resetFragment() {
+        super.resetFragment();
+        currentlySelectedAnswerNumber = 0;
+        previouslySelectedAnwer = null;
+        mUiTvQuestion.setAlpha(0);
+    }
+
+    @Override
     public View getQuestionView() {
         return mUiTvQuestion;
     }

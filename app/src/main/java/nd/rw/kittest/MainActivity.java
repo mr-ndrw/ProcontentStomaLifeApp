@@ -78,6 +78,9 @@ public class MainActivity
     private AnswerBundle answerBundle;
     private AnswerService answerService;
 
+    public static final String localServerAddress = "http://192.168.1.110:3000";
+    public static final String remoteServerAddress = "http://46.101.112.125:3000";
+
     //endregion Fields
 
     //region AppCompatActivity Methods
@@ -108,7 +111,7 @@ public class MainActivity
 
         answerBundle = new AnswerBundle();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.110:3000")
+                .baseUrl(remoteServerAddress)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         answerService = retrofit.create(AnswerService.class);
@@ -139,12 +142,25 @@ public class MainActivity
     //region Private Methods
 
     private void reset(){
+        mUiBtnReset.setVisibility(View.INVISIBLE);
         //  navigate to greeting fragment
-        mUiViewPager.setCurrentItem(0);
-        //  iterate over fragments and reset them
-
+        mUiViewPager.setCurrentItem(0, false);
+        //  reset fragments
+        firstQuestionFragment.resetFragment();
+        secondQuestionFragment.resetFragment();
+        thirdQuestionFragment.resetFragment();
+        fourthQuestionFragment.resetFragment();
+        fifthQuestionFragment.resetFragment();
+        sixthQuestionFragment.resetFragment();
+        seventhQuestionFragment.resetFragment();
+        eighthQuestionFragment.resetFragment();
+        ninthQuestionFragment.resetFragment();
+        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mUiViewPager.setAdapter(pagerAdapter);
         //  reset bundle
         answerBundle.reset();
+
+        fragmentPositionPagerCantGoBeyond = 1;
     }
 
     private void putAnswerBundle(){
@@ -174,6 +190,10 @@ public class MainActivity
         mUiViewPager.setCurrentItem(10, true);
     }
 
+    public void onResetClicked(View view) {
+        reset();
+    }
+
     //endregion Events, Listeners
 
     //region OnPageChangeListener methods
@@ -182,10 +202,9 @@ public class MainActivity
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         //Log.d(TAG, "onPageScrolled() called with: " + "position = [" + position + "], positionOffset = [" + positionOffset + "], positionOffsetPixels = [" + positionOffsetPixels + "]");
 
-        if (position > 0){
-            int progressBarPosition = (position + 1) * 100 + (int) (positionOffset * 100);
-            mUiProgressBar.setProgress(progressBarPosition);
-        }
+        int progressBarPosition = (position + 1) * 100 + (int) (positionOffset * 100);
+        mUiProgressBar.setProgress(progressBarPosition);
+
         if (position == fragmentPositionPagerCantGoBeyond){
             if (positionOffset > 0.05){
                 mUiViewPager.setCurrentItem(position, true);
@@ -195,6 +214,7 @@ public class MainActivity
 
     @Override
     public void onPageSelected(int position) {
+        Log.d(TAG, "onPageSelected() called with: " + "position = [" + position + "]");
         QuestionFragment questionFragment = (QuestionFragment) pagerAdapter.getItem(position);
         questionFragment.prepareForEntering();
         //  on navigating to summing up page we should fire up the retrofit and post the result

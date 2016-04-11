@@ -44,6 +44,9 @@ public class FirstQuestionFragment
     @Bind(R.id.rl_question)
     public RelativeLayout rl_question;
 
+    private int currentlySelectedAnswerNumber;
+    private View previouslySelectedAnwer;
+
     //endregion Fields
 
     //region Methods
@@ -94,9 +97,6 @@ public class FirstQuestionFragment
 
     //endregion Fragment methods
 
-    private int currentlySelectedAnswerNumber;
-    private View previouslySelectedAnwer;
-
     private int transitionTime = 500;
 
     public View.OnClickListener answerListener = new View.OnClickListener() {
@@ -138,6 +138,14 @@ public class FirstQuestionFragment
 
     //region Question Methods
 
+
+    @Override
+    public void resetFragment() {
+        super.resetFragment();
+        currentlySelectedAnswerNumber = 0;
+        previouslySelectedAnwer = null;
+        rl_question.setAlpha(0);
+    }
 
     @Override
     public View getQuestionView() {

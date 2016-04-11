@@ -117,6 +117,10 @@ public abstract class QuestionFragment extends Fragment {
         textView.setScaleY(1);
     }
 
+    public void resetFragment(){
+        wasNotified = false;
+    }
+
     public abstract View getQuestionView();
     public abstract List<View> getViewsForAnimation();
     public abstract int getPosition();

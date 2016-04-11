@@ -39,7 +39,8 @@
                     android:layout_centerVertical="true"
                     android:visibility="invisible"
                     android:text="Reset"
-                    android:textSize="@dimen/font_larger" />
+                    android:textSize="@dimen/font_larger"
+                    android:onClick="onResetClicked"/>
 
             </RelativeLayout>
 

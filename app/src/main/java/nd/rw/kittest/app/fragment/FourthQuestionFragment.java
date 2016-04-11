@@ -131,6 +131,16 @@ public class FourthQuestionFragment extends QuestionFragment{
     //region Question Methods
 
     @Override
+    public void resetFragment() {
+        super.resetFragment();
+        isASelected = false;
+        isBSelected = false;
+        isCSelected = false;
+        isDSelected = false;
+        mUiTvQuestion.setAlpha(0);
+    }
+
+    @Override
     public View getQuestionView() {
         return mUiTvQuestion;
     }
